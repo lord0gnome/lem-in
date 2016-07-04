@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 15:16:32 by guiricha          #+#    #+#             */
-/*   Updated: 2016/06/28 16:56:22 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/07/04 17:14:48 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 # include "../libft/libft.h"
 # include "../printf/ft_printf.h"
 # include "../gnl/get_next_line.h"
-
+#define START 1
+#define END 2
+#define NOCOMMAND 0
 
 typedef struct		s_l_ants
 {
@@ -26,8 +28,13 @@ typedef struct		s_l_ants
 
 typedef struct		s_l_rooms
 {
-	char			*name;
-	struct s_l_ants	*ant;
+	char				*name;
+	char				startend;
+	int					x;
+	int					y;
+	struct s_l_ants		*ant;
+	struct s_l_rooms	*next;
+	struct s_l_rooms	*connections;
 }					t_l_rooms;
 
 typedef struct		s_l_error
@@ -46,10 +53,14 @@ typedef struct		s_l_data
 	int				i;
 	int				i2;
 	int				fd;
+	int				cx;
+	int				cy;
 	char			help;
 	char			visual;
 	char			nocomment;
 	char			ignoreerr;
+	char			order;
+	char			command;
 	t_l_error		*err;
 	t_l_ants		*ants;
 	t_l_rooms		*rooms;
@@ -59,5 +70,9 @@ int	parse_fd(t_l_data *d);
 int	parse_arguments(t_l_data *d, int argc, char **argv);
 t_l_data	*init_l_data(t_l_error *error);
 t_l_error	*init_l_error(void);
+int			add_ants(t_l_data *d);
+int			add_room(t_l_data *d, char *name);
+int			parse_line(t_l_data *d);
+char		*go_to_next_line(char *str);
 
 #endif

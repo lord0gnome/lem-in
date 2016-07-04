@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 15:18:58 by guiricha          #+#    #+#             */
-/*   Updated: 2016/06/28 16:56:16 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/07/04 17:14:44 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
+
 
 int	main(int argc, char **argv)
 {
@@ -30,5 +31,17 @@ int	main(int argc, char **argv)
 	if (read(data->fd, NULL, 0) < 0)
 		return (ft_printf("ERROR : Tried to read a directory / Other read error"));
 	parse_fd(data);
+	add_ants(data);
+	while (data->ants)
+	{
+		ft_putnbr(data->ants->id);
+		ft_putchar('\n');
+		data->ants = data->ants->next;
+	}
+	while (data->rooms)
+	{
+		ft_putstr(data->rooms->name);
+		data->rooms = data->rooms->next;
+	}
 	return (0);
 }

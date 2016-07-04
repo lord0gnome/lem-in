@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:05:22 by guiricha          #+#    #+#             */
-/*   Updated: 2016/06/28 16:56:18 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/07/04 17:14:46 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ int	parse_fd(t_l_data *d)
 	}
 	if (d->newl)
 	ft_putstr(d->newl);
+	while (parse_line(d))
+		d->newl = go_to_next_line(d->newl);
 	return (1);
 }
 
@@ -74,6 +76,9 @@ int	parse_arguments(t_l_data *d, int argc, char **argv)
 				d->visual = 1;
 			else if (argv[d->i][d->i2] == 'c' && d->nocomment == 0)
 				d->nocomment = 1;
+			else if (argv[d->i][d->i2] == 'l')
+				d->order = -1;
+
 			else
 				return (d->err->errno = 243); // not a valid arg
 			d->i2++;
