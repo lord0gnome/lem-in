@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/04 14:06:43 by guiricha          #+#    #+#             */
-/*   Updated: 2016/07/04 17:00:43 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/07/11 16:17:30 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	add_room(t_l_data *d, char *name)
 		while (d->rooms->next)
 			d->rooms = d->rooms->next;
 		if ((new = (t_l_rooms *)malloc(sizeof(t_l_rooms))) == NULL)
-			return (-1);
+			return (0);
 		d->rooms->next = new;
 		new->next = NULL;
 		new->connections = NULL;
@@ -33,7 +33,7 @@ int	add_room(t_l_data *d, char *name)
 	else
 	{
 		if ((new = (t_l_rooms *)malloc(sizeof(t_l_rooms))) == NULL)
-			return (-1);
+			return (0);
 		new->next = NULL;
 		new->connections = NULL;
 		new->name = ft_strdup(name);
