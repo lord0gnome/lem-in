@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:06:52 by guiricha          #+#    #+#             */
-/*   Updated: 2016/07/04 16:46:43 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/08/16 15:14:17 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ t_l_data	*init_l_data(t_l_error *error)
 	d->cy = -1;
 	d->fd = 0;
 	d->help = 0;
+	d->nants = -1;
 	d->visual = 0;
 	d->nocomment = 0;
 	d->order = 0;

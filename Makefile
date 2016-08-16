@@ -6,11 +6,12 @@
 #    By: guiricha <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/26 16:55:06 by guiricha          #+#    #+#              #
-#    Updated: 2016/07/04 16:59:08 by guiricha         ###   ########.fr        #
+#    Updated: 2016/08/16 15:25:57 by guiricha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC_NAME = main.c parse_args.c init.c ants.c rooms.c parse_line.c
+SRC_NAME = main.c parse_args.c init.c ants.c rooms.c parse_line.c \
+		   print_args.c
 NAME = lem-in
 SRC_DIR = ./sources/
 SRC_NDIR=$(addprefix $(SRC_DIR), $(SRC_NAME))

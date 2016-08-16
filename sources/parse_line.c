@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/04 14:46:01 by guiricha          #+#    #+#             */
-/*   Updated: 2016/07/11 16:18:16 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/08/16 15:47:04 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,17 @@
 
 char	*go_to_next_line(char *str)
 {
+	ft_putstr("line before this command\n");
+	ft_putstr(str);
 	while (*str)
 	{
 		str++;
 		if (*str && *str == '\n')
+		{
+			ft_putstr("line after this command\n");
+			ft_putstr(str + 1);
 			return (str + 1);
+		}
 	}
 	return (str);
 }
@@ -53,6 +59,7 @@ int	is_room(char *str, t_l_data *d)
 	d->i2 += ft_atoi_addlen(&(d->cy), str + d->i2);
 	if (!(add_room(d, ft_strgrab(str, ' '))))
 		return (d->err->errno = 103);
+	ft_printf("%s | is considered to be a room.\n", str);
 	return (0);
 }
 
@@ -73,19 +80,20 @@ int	is_command(char *str, t_l_data *d)
 				return (d->err->errno = 42);
 		}
 		else
-			return (0);
+			return (1);
 		i++;
 	}
-	return (1);
+	ft_printf("%s | is considered to be a command.\n", str);
+	return (0);
 }
 
 
 int	parse_line(t_l_data *d)
 {
-	if (is_ants(d->newl))
+	if (d->nants == -1 && is_ants(d->newl))
 		d->nants = ft_atoi(d->newl);
-	else if (is_command(d->newl, d))
-		d->i2++;
+	else if (!is_command(d->newl, d))
+		d->i2 = d->i2;
 	else if (!is_room(d->newl, d))
 		ft_putnbr(1);
 	if (!(*d->newl))

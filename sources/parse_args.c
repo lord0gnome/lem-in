@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:05:22 by guiricha          #+#    #+#             */
-/*   Updated: 2016/07/04 17:14:46 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/08/16 15:47:06 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ int	parse_fd(t_l_data *d)
 				d->newl = ft_strjoin_lemin(d->newl, d->l);
 		}
 	}
-	if (d->newl)
-	ft_putstr(d->newl);
+	//if (d->newl)
+	//ft_putstr(d->newl);
 	while (parse_line(d))
 		d->newl = go_to_next_line(d->newl);
 	return (1);
