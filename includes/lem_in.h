@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 15:16:32 by guiricha          #+#    #+#             */
-/*   Updated: 2016/08/16 15:47:08 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/08/16 19:38:13 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,13 @@
 #define END 2
 #define NOCOMMAND 0
 
-typedef struct		s_l_ants
+typedef struct s_l_rooms t_l_rooms;
+typedef struct			s_l_ants
 {
-	int				id;
-	void			*room;
-	struct s_l_ants	*next;
-}					t_l_ants;
+	int					id;
+	struct s_l_rooms	*room;
+	struct s_l_ants		*next;
+}						t_l_ants;
 
 typedef struct		s_l_rooms
 {
@@ -62,8 +63,8 @@ typedef struct		s_l_data
 	char			order;
 	char			command;
 	t_l_error		*err;
-	t_l_ants		*ants;
-	t_l_rooms		*rooms;
+	t_l_ants		**ants;
+	t_l_rooms		**rooms;
 }					t_l_data;
 
 void	print_arguments(t_l_data *d);

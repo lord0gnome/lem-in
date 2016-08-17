@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/04 14:46:01 by guiricha          #+#    #+#             */
-/*   Updated: 2016/08/16 15:47:04 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/08/16 19:00:49 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,24 @@
 
 char	*go_to_next_line(char *str)
 {
-	ft_putstr("line before this command\n");
-	ft_putstr(str);
 	while (*str)
 	{
 		str++;
 		if (*str && *str == '\n')
-		{
-			ft_putstr("line after this command\n");
-			ft_putstr(str + 1);
 			return (str + 1);
-		}
 	}
-	return (str);
+	return (NULL);
 }
 
 int	is_ants(char *str)
 {
-	while (*str && ft_isdigit(*str))
+	int	i;
+
+	i = 0;
+	while (str[i] && ft_isdigit(str[i]))
 	{
-		str++;
-		if (*str == '\n')
+		i++;
+		if (str[i] == '\n')
 			return (1);
 	}
 	return (0);
@@ -94,9 +91,7 @@ int	parse_line(t_l_data *d)
 		d->nants = ft_atoi(d->newl);
 	else if (!is_command(d->newl, d))
 		d->i2 = d->i2;
-	else if (!is_room(d->newl, d))
-		ft_putnbr(1);
-	if (!(*d->newl))
-		return (0);
+	else if (is_room(d->newl, d))
+		d->i2 = d->i2;
 	return (1);
 }
