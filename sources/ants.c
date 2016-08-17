@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/28 15:59:15 by guiricha          #+#    #+#             */
-/*   Updated: 2016/08/16 20:52:05 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/08/17 19:06:50 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	add_ants(t_l_data *d)
 			return (-1);
 		new->id = d->nants - 1;
 		new->next = prev;
-		new->room = (*d->rooms);
+		new->room = d->rooms;
 		d->nants--;
 		prev = new;
 	}

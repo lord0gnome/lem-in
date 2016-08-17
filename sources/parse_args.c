@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:05:22 by guiricha          #+#    #+#             */
-/*   Updated: 2016/08/16 17:23:51 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/08/17 19:28:46 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,6 @@ int	parse_arguments(t_l_data *d, int argc, char **argv)
 	}
 
 	d->i = 0;
+	parse_fd(d);
 	return (d->err->errno = 0);
 }

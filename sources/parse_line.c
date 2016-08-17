@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/04 14:46:01 by guiricha          #+#    #+#             */
-/*   Updated: 2016/08/16 19:00:49 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/08/17 21:00:01 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ int	is_room(char *str, t_l_data *d)
 	d->i2 += ft_atoi_addlen(&(d->cy), str + d->i2);
 	if (!(add_room(d, ft_strgrab(str, ' '))))
 		return (d->err->errno = 103);
-	ft_printf("%s | is considered to be a room.\n", str);
 	return (0);
 }
 
@@ -69,9 +68,10 @@ int	is_command(char *str, t_l_data *d)
 	{
 		if (str[i] == '#' && str[i + 1] && str[i + 1] == '#')
 		{
-			if (!ft_strcmp("start", str + 2))
+			ft_putstr("in ehere?");
+			if (!ft_strcmp("start\n", str + 2))
 				d->command = START;
-			else if (!ft_strcmp("end", str + 2))
+			else if (!ft_strcmp("end\n", str + 2))
 				d->command = END;
 			else
 				return (d->err->errno = 42);
@@ -80,7 +80,6 @@ int	is_command(char *str, t_l_data *d)
 			return (1);
 		i++;
 	}
-	ft_printf("%s | is considered to be a command.\n", str);
 	return (0);
 }
 
@@ -89,9 +88,11 @@ int	parse_line(t_l_data *d)
 {
 	if (d->nants == -1 && is_ants(d->newl))
 		d->nants = ft_atoi(d->newl);
+	else if (!is_room(d->newl, d))
+		d->i2 = d->i2;
 	else if (!is_command(d->newl, d))
 		d->i2 = d->i2;
-	else if (is_room(d->newl, d))
-		d->i2 = d->i2;
+if ((d->newl = go_to_next_line(d->newl)) == NULL)
+		return (0);
 	return (1);
 }

@@ -6,7 +6,7 @@
 #    By: guiricha <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/26 16:55:06 by guiricha          #+#    #+#              #
-#    Updated: 2016/08/16 16:35:22 by guiricha         ###   ########.fr        #
+#    Updated: 2016/08/17 17:35:38 by guiricha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,8 +28,8 @@ $(NAME): $(OBJ_NDIR)
 	@echo "Making";
 	@make -s -C libft && cp -f libft/libft.a ./
 	@make -s -C printf && cp -f printf/libftprintf.a ./
-	$(CC) $(CF) -Ilibft -o $(O_D)get_next_line.o -c gnl/get_next_line.c
-	$(CC) -o $(NAME) $(OBJ_NDIR) $(O_D)get_next_line.o $(STCS)
+	@$(CC) $(CF) -Ilibft -o $(O_D)get_next_line.o -c gnl/get_next_line.c
+	@$(CC) -o $(NAME) $(OBJ_NDIR) $(O_D)get_next_line.o $(STCS)
 $(OBJ_NDIR):
 	@mkdir -p $(O_D)
 	@$(CC) $(CF) -c $(SRC_NDIR) -Iincludes -Ilibft -Iprintf -Ignl
