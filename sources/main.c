@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 15:18:58 by guiricha          #+#    #+#             */
-/*   Updated: 2016/08/17 21:00:00 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/08/18 17:33:24 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,15 @@ int	main(int argc, char **argv)
 	{
 
 	}
-	data->froom = data->rooms;
+	data->frst = data->rooms;
 	ft_putstr("\n\n\n");
-	while (data->froom)
+	while (data->frst)
 	{
-		ft_printf("\n%s is %d room with coords x:%d and y:%d\n", data->froom->name, data->froom->startend, data->froom->x, data->froom->y);
-		data->froom = data->froom->next;
+		ft_printf("\n%s is %d room with coords x:%d and y:%d\n", data->frst->name, data->frst->startend, data->frst->x, data->frst->y);
+		data->frst = data->frst->next;
 	}
 	ft_putnbr(data->err->errno);
 	add_ants(data);
+	ft_putnbr(data->err->errno);
 	return (0);
 }

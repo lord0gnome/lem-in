@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 15:16:32 by guiricha          #+#    #+#             */
-/*   Updated: 2016/08/17 21:00:05 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/08/18 17:33:33 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,12 @@ typedef struct			s_l_ants
 	struct s_l_ants		*next;
 }						t_l_ants;
 
+typedef struct		s_l_links
+{
+	struct s_l_rooms		*roomptr;
+	struct s_l_links		*next;
+}					t_l_links;
+
 typedef struct		s_l_rooms
 {
 	char				*name;
@@ -35,7 +41,7 @@ typedef struct		s_l_rooms
 	int					y;
 	struct s_l_ants		*ant;
 	struct s_l_rooms	*next;
-	struct s_l_rooms	*connections;
+	struct s_l_links	*links;
 }					t_l_rooms;
 
 typedef struct		s_l_error
@@ -65,7 +71,7 @@ typedef struct		s_l_data
 	t_l_error		*err;
 	t_l_ants		**ants;
 	t_l_rooms		*rooms;
-	t_l_rooms		*froom;
+	t_l_rooms		*frst;
 }					t_l_data;
 
 void	print_arguments(t_l_data *d);

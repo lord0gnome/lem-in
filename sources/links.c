@@ -1,39 +1,53 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rooms.c                                            :+:      :+:    :+:   */
+/*   links.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/07/04 14:06:43 by guiricha          #+#    #+#             */
-/*   Updated: 2016/08/18 16:02:27 by guiricha         ###   ########.fr       */
+/*   Created: 2016/08/18 16:01:09 by guiricha          #+#    #+#             */
+/*   Updated: 2016/08/18 17:10:52 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "../includes/lem_in.h"
 
-t_l_rooms	*create_rooms(t_l_data *d, char *name)
+int		create_links_both_empty(t_l_rooms *r1, t_l_rooms *r2)
 {
-	t_l_rooms	*new;
+	t_l_links	*lr1to2;
+	t_l_links	*lr2to1;
 
-	if ((new = (t_l_rooms *)malloc(sizeof(t_l_rooms))) == NULL)
+	if ((lr1to2 = (t_l_links *)malloc(sizeof(t_l_rooms))) == NULL)
 		return (NULL);
-	new->next = NULL;
-	new->links = NULL;
-	new->x = d->cx;
-	new->y = d->cy;
-	new->name = ft_strdup(name);
-	new->startend = d->command;
-	d->rooms = new;
-	return (new);
+	if ((lr2to1 = (t_l_links *)malloc(sizeof(t_l_rooms))) == NULL)
+		return (NULL);
+	lr1to2->next = NULL;
+	lr1to2->roomptr = r2;
+	lr2to1->next = NULL;
+	lr2to1->roomptr = r1;
+	r1->links = lr1to2;
+	r2->links = lr2to1;
+	return (1);
 }
 
-int		add_room(t_l_data *d, char *name)
+int		add_link(t_l_rooms *r1, t_l_rooms *r2)
 {
 	t_l_rooms	*new;
 	t_l_rooms	*first;
+	t_l_links	*lr1to2;
+	t_l_links	*lr2to1;
 
-	if ((d->rooms))
+	if (r1->links && r2->links)
+	{
+		while (r1->links->next)
+			r1->links = r1->links->next;
+		while (r2->links->next)
+			r2->links = r2->links->next;
+		if ((lr1to2 = (t_l_links *)malloc(sizeof(t_l_rooms))) == NULL)
+			return (NULL);
+		if ((lr2to1 = (t_l_links *)malloc(sizeof(t_l_rooms))) == NULL)
+			return (NULL);
+	}
 	{
 		first = (d->rooms);
 		while (first && first->next)

@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/04 14:46:01 by guiricha          #+#    #+#             */
-/*   Updated: 2016/08/17 21:00:01 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/08/18 17:31:52 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,9 @@ int	is_command(char *str, t_l_data *d)
 	{
 		if (str[i] == '#' && str[i + 1] && str[i + 1] == '#')
 		{
-			ft_putstr("in ehere?");
-			if (!ft_strcmp("start\n", str + 2))
+			if (!ft_strncmp("start\n", str + 2, 6))
 				d->command = START;
-			else if (!ft_strcmp("end\n", str + 2))
+			else if (!ft_strncmp("end\n", str + 2, 4))
 				d->command = END;
 			else
 				return (d->err->errno = 42);
@@ -83,16 +82,56 @@ int	is_command(char *str, t_l_data *d)
 	return (0);
 }
 
+int	is_link(char *linkname, t_l_data *d)
+{
+	int	index;
+	t_l_rooms	*travel;
+	t_l_rooms	*r1;
+	t_l_rooms	*r2;
+
+	r1 = NULL;
+	r2 = NULL;
+	if ((index = ft_findfirstlastdelim(linkname, '-', 0)) == -1)
+		return (d->err->errno = 110);
+	travel = d->rooms;
+	while (travel)
+	{
+		if (index >= 0 && !ft_strncmp(linkname, travel->name, index))
+		{
+			ft_strntilnl(linkname);
+			ft_printf(" \\\\\\compared to %s is true for length %d\n", travel->name, index);
+			r1 = travel;
+
+		}
+		if (!ft_strcmpdelim(linkname + index, travel->name, '\n'))
+		{
+			ft_strntilnl(linkname);
+			ft_printf(" ///compared to %s is true for length %d\n", travel->name, index);
+			r2 = travel;
+		}
+		travel = travel->next;
+	}
+	if (r1 && r2)
+	{
+		ft_putstr("works ");
+		ft_printf("between %s and %s\n", r1->name, r2->name);
+		return (0);
+	}
+	return (d->err->errno = 112);
+}
+
 
 int	parse_line(t_l_data *d)
 {
 	if (d->nants == -1 && is_ants(d->newl))
 		d->nants = ft_atoi(d->newl);
+	else if (!is_link(d->newl, d))
+		d->i2 = d->i2;
 	else if (!is_room(d->newl, d))
 		d->i2 = d->i2;
 	else if (!is_command(d->newl, d))
 		d->i2 = d->i2;
-if ((d->newl = go_to_next_line(d->newl)) == NULL)
+	if ((d->newl = go_to_next_line(d->newl)) == NULL)
 		return (0);
 	return (1);
 }
