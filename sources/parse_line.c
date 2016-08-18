@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/04 14:46:01 by guiricha          #+#    #+#             */
-/*   Updated: 2016/08/18 17:31:52 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/08/18 19:04:49 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,16 +96,21 @@ int	is_link(char *linkname, t_l_data *d)
 	travel = d->rooms;
 	while (travel)
 	{
-		if (index >= 0 && !ft_strncmp(linkname, travel->name, index))
+		if (!r1 && index >= 0 && !ft_strncmp(linkname, travel->name, index))
 		{
 			ft_strntilnl(linkname);
 			ft_printf(" \\\\\\compared to %s is true for length %d\n", travel->name, index);
 			r1 = travel;
 
 		}
-		if (!ft_strcmpdelim(linkname + index, travel->name, '\n'))
+		/*ft_strntilnl(linkname + index + 1);
+		ft_putchar('_');
+		ft_strntilnl(travel->name);
+		ft_putchar('\n');*/
+		if (!r2 && !ft_strcmpdelim(linkname + index + 1, travel->name, '\n'))
 		{
-			ft_strntilnl(linkname);
+			ft_putnbr(ft_strcmpdelim(linkname + index + 1, travel->name, '\n'));
+			ft_strntilnl(linkname + index + 1);
 			ft_printf(" ///compared to %s is true for length %d\n", travel->name, index);
 			r2 = travel;
 		}
