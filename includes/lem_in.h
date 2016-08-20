@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 15:16:32 by guiricha          #+#    #+#             */
-/*   Updated: 2016/08/18 17:33:33 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/08/20 17:09:48 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,17 +69,22 @@ typedef struct		s_l_data
 	char			order;
 	char			command;
 	t_l_error		*err;
-	t_l_ants		**ants;
+	t_l_ants		*ants;
 	t_l_rooms		*rooms;
 	t_l_rooms		*frst;
+	t_s_list		*lines;
 }					t_l_data;
 
 void	print_arguments(t_l_data *d);
+int	is_command(char *str, t_l_data *d);
 int	parse_fd(t_l_data *d);
 int	parse_arguments(t_l_data *d, int argc, char **argv);
+int			init_link(t_l_rooms *init, t_l_rooms *link);
+int			new_link(t_l_rooms *r1, t_l_rooms *r2);
+int			add_link(t_l_rooms *r1, t_l_rooms *r2);
 t_l_data	*init_l_data(t_l_error *error);
 t_l_error	*init_l_error(void);
-int			add_ants(t_l_data *d);
+t_l_ants	*add_ants(t_l_data *d);
 int			add_room(t_l_data *d, char *name);
 int			parse_line(t_l_data *d);
 char		*go_to_next_line(char *str);

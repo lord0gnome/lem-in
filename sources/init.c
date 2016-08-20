@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:06:52 by guiricha          #+#    #+#             */
-/*   Updated: 2016/08/17 19:05:43 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/08/20 16:06:25 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ t_l_data	*init_l_data(t_l_error *error)
 	d->err = error;
 	d->ants = NULL;
 	d->rooms = NULL;
-
+	d->lines = NULL;
+	d->frst = NULL;
 	return (d);
 }
 
@@ -47,6 +48,5 @@ t_l_error	*init_l_error(void)
 	error->errno = 0;
 	error->errstr = NULL;
 	error->errchar = 0;
-
 	return (error);
 }

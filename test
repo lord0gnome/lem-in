@@ -1,26 +1,27 @@
 52
 ##start
-1 23 3
-2 16 7
+one 23 3
+two 16 7
 #commentaire
-3 16 3
-423 16 5
-5 9 3
-6 1 5
-7 4 8
+three 16 3
+four 16 5
+five 9 3
+six 1 5
+seven 4 8
 ##end
-0 9 5
-0-42
-0-6
+zero 9 5
+zero-four
+zero-six
 ##notarealcommand
-1-3
-423-3
-5-2
-3-5
+one-three
+four-three
+five-two
+three-five
 #autre commentaire
-423-2
-2-1
-7-6
-7-2
-6-5
-7-423
+four-two
+two-one
+seven-six
+seven-two
+seven-four
+six-five
+seven-zero

@@ -6,30 +6,34 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/28 15:59:15 by guiricha          #+#    #+#             */
-/*   Updated: 2016/08/17 19:06:50 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/08/20 17:12:12 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem_in.h"
 
-int	add_ants(t_l_data *d)
+t_l_ants	*add_ants(t_l_data *d)
 {
+	int	antid;
 	t_l_ants	*new;
 	t_l_ants	*prev;
+	t_l_ants	*first;
 
+	antid = 0;
+	first = NULL;
 	prev = NULL;
-	if (d->nants <= 0)
-		return (d->err->errno = 250);
-	while (d->nants)
+	while (d->nants--)
 	{
 		if ((new = (t_l_ants *)malloc(sizeof(t_l_ants))) == NULL)
-			return (-1);
-		new->id = d->nants - 1;
-		new->next = prev;
+			return (NULL);
+		new->id = antid++;
+		new->next = NULL;
 		new->room = d->rooms;
-		d->nants--;
+		if (!first)
+			first = new;
+		if (prev)
+			prev->next = new ? new : NULL;
 		prev = new;
 	}
-	d->ants = &new;
-	return (d->nants);
+	return (first);
 }
