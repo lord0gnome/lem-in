@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/28 15:59:15 by guiricha          #+#    #+#             */
-/*   Updated: 2016/08/20 17:12:12 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/08/23 12:17:59 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ t_l_ants	*add_ants(t_l_data *d)
 	antid = 0;
 	first = NULL;
 	prev = NULL;
+	if (d->nants <= 0)
+		return (NULL);
 	while (d->nants--)
 	{
 		if ((new = (t_l_ants *)malloc(sizeof(t_l_ants))) == NULL)

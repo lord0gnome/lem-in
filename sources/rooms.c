@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/04 14:06:43 by guiricha          #+#    #+#             */
-/*   Updated: 2016/08/20 16:14:39 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/08/23 13:22:18 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int			add_room(t_l_data *d, char *name)
 		first->next = new;
 	}
 	else
-		new = create_rooms(d, name);
+		create_rooms(d, name);
 	d->command = NOCOMMAND;
 	return (1);
 }

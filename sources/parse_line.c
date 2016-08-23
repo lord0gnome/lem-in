@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/04 14:46:01 by guiricha          #+#    #+#             */
-/*   Updated: 2016/08/20 16:37:45 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/08/23 17:21:46 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ int	is_room(char *str, t_l_data *d)
 		return (d->err->errno = 102);
 	d->i2++;
 	d->i2 += ft_atoi_addlen(&(d->cy), str + d->i2);
-	if (!(add_room(d, ft_strgrab(str, ' '))))
-		return (d->err->errno = 103);
 	return (0);
 }
 
@@ -53,60 +51,112 @@ int	is_command(char *str, t_l_data *d)
 	int	i;
 
 	i = 0;
-	if (str[i] == '#' && str[i + 1] && str[i + 1] == '#')
+	if (str[i] == '#' && str[i + 1] && str[i + 1] && str[i + 1] == '#')
 	{
 		if (!ft_strcmp("start", str + 2))
-			if (d)
-				return (d->command = START ? 0 : 40);
-		if (!ft_strcmp("end", str + 2))
-			if (d)
-				return (d->command = END ? 0 : 41);
+			return (d->command = START);
+		else if (!ft_strcmp("end", str + 2))
+			return (d->command = END);
+		else
+			return (0);
 	}
 	return (0);
 }
 
 int	is_link(char *link, t_l_data *d)
 {
-	t_l_rooms	*travel;
-	t_l_rooms	*r1;
-	t_l_rooms	*r2;
+	t_l_rooms	*trav;
 
-	r1 = NULL;
-	r2 = NULL;
+	d->r1 = NULL;
+	d->r2 = NULL;
 	if ((d->i = ft_findfirstlastdelim(link, '-', 0)) == -1)
 		return (d->err->errno = 110);
-	travel = d->rooms;
-	while (travel && !r1)
+	trav = d->rooms;
+	while (trav && !d->r1)
 	{
-		r1 = d->i >= 0 && !ft_strncmp(link, travel->name, d->i) ? travel : NULL;
-		travel = r1 ? travel : travel->next;
+		d->r1 = d->i >= 0 && !ft_strncmp(link, trav->name, d->i) ? trav : NULL;
+		trav = d->r1 ? trav : trav->next;
 	}
-	travel = d->rooms;
-	while (travel)
+	trav = d->rooms;
+	while (trav && !d->r2)
 	{
-		r2 = !ft_strcmp(link + d->i + 1, travel->name) ? travel : NULL;
-		travel = r2 ? travel : travel->next;
+		d->r2 = !ft_strcmp(link + d->i + 1, trav->name) ? trav : NULL;
+		trav = d->r2 ? trav : trav->next;
 	}
-	if (r1 && r2)
-		return (add_link(r1, r2));
+	if (d->r1 && d->r2)
+		return (0);
 	return (d->err->errno = 112);
+}
+
+int	test_order(t_l_data *d)
+{
+	t_s_list	*travel;
+	t_s_list	*incept;
+	t_s_list	*first;
+	int			order;
+
+
+	order = -1;
+	travel = d->lines;
+	first = d->lines;
+	if (!d->ignoreerr)
+	{
+		while (travel->next)
+			{
+				order = travel->flag == 3 ? 3 : order;
+				if (order == 3 && travel && travel->next->flag == 2)
+				{
+					incept = travel->next;
+					while (incept && incept->next && incept->next->flag != 3)
+						incept = incept->next;
+					ft_swap_next_members(&incept, &travel);
+					travel = first;
+					order = -1;
+					continue;
+				}
+		ft_putnbr(travel->flag);
+		ft_putchar('-');
+		ft_putchar('-');
+		ft_putchar('-');
+		ft_putstr(travel->str);
+		ft_putchar('\n');
+		travel = travel->next;
+			}
+	}
+	return (0);
 }
 
 int	parse_line(t_l_data *d)
 {
 	t_s_list	*travel;
+	int			tmp;
 
 	travel = d->lines;
 	while (travel)
 	{
+		tmp = 0;
 		if (travel->flag && d->nants == -1 && is_ants(travel->str))
-			d->nants = ft_atoi(travel->str);
-		else if (travel->flag && !is_command(travel->str, d))
-			d->i2 = d->i2;
-		else if (travel->flag && !is_link(travel->str, d))
-			d->i2 = d->i2;
+		{
+			//d->nants = ft_atoi(travel->str);
+			travel->flag = 1;
+		}
+		else if (travel->flag && (tmp = is_command(travel->str, d)))
+		{
+		//	d->command = tmp;
+			travel->flag = 4;
+		}
+		else if (travel->flag && (!is_link(travel->str, d) ||
+				(ft_findfirstlastdelim(travel->str, '-', 0)) != -1))
+		{
+		//	add_link(d->r1, d->r2);
+			travel->flag = 3;
+		}
 		else if (travel->flag && !is_room(travel->str, d))
-			d->i2 = d->i2;
+		{
+			travel->flag = 2;
+		/*	if (!(add_room(d, ft_strgrab(travel->str, ' '))))
+			return (d->err->errno = 103);*/
+		}
 		travel = travel->next;
 	}
 	return (1);

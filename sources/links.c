@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/18 16:01:09 by guiricha          #+#    #+#             */
-/*   Updated: 2016/08/20 16:06:33 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/08/23 13:52:35 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,5 @@ int		add_link(t_l_rooms *r1, t_l_rooms *r2)
 	}
 	else if (r1->links && r2->links)
 		new_link(r1, r2);
-	return (1);
+	return (0);
 }

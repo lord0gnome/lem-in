@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:05:22 by guiricha          #+#    #+#             */
-/*   Updated: 2016/08/20 16:41:28 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/08/23 15:21:30 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,10 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-int	not_command(char *str)
-{
-	if (is_command(str, NULL))
-		return (1);
-	return (0);
-}
-
-int	is_output_line(char *str)
+int	is_output_line(char *str, t_l_data *d)
 {
 	if ((*str && *str == '#' && *(str + 1) && *(str + 1) != '#') ||
-			(not_command(str) && *str == '#'))
+			(!is_command(str, d) && *str == '#'))
 		return (0);
 	return (1);
 }
@@ -33,7 +26,7 @@ int	is_output_line(char *str)
 int	parse_fd(t_l_data *d)
 {
 	while (get_next_line(d->fd, &d->l) > 0)
-		d->lines = ft_add_s_list(d->l, is_output_line(d->l), d->lines);
+		d->lines = ft_add_s_list(d->l, is_output_line(d->l, d), d->lines);
 	return (1);
 }
 
@@ -59,6 +52,8 @@ int	parse_args_cnt(t_l_data *d, char **argv)
 			d->nocomment = 1;
 		else if (argv[d->i][d->i2] == 'l')
 			d->order = -1;
+		else if (argv[d->i][d->i2] == 'e')
+			d->ignoreerr = 1;
 		else
 			return (d->err->errno = 243);
 		d->i2++;
