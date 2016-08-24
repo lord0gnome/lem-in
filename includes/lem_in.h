@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 15:16:32 by guiricha          #+#    #+#             */
-/*   Updated: 2016/08/23 15:15:57 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/08/24 18:12:46 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ t_l_error	*init_l_error(void);
 t_l_ants	*add_ants(t_l_data *d);
 int			add_room(t_l_data *d, char *name);
 int			parse_line(t_l_data *d);
+int			parse_line_test(t_l_data *d);
 char		*go_to_next_line(char *str);
 
 #endif

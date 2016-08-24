@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 15:18:58 by guiricha          #+#    #+#             */
-/*   Updated: 2016/08/23 15:15:40 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/08/24 18:33:51 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,12 @@ int	main(int argc, char **argv)
 	if (data->err->errno != 0 && !data->ignoreerr)
 		return (ft_printf("ERROR : %d, %s\n", err->errno, err->errstr));
 	parse_line(data);
-	data->frst = data->rooms;
 	ft_putstr("\n\n\n");
 	data->ants = add_ants(data);
 	test_order(data);
+	ft_print_members(data->lines);
+	parse_line_test(data);
+	data->frst = data->rooms;
 	while (data->frst)
 	{
 		ft_printf("room %s has links below\n", data->frst->name);
