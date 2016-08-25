@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:06:52 by guiricha          #+#    #+#             */
-/*   Updated: 2016/08/20 16:06:25 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/08/25 17:47:36 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ t_l_data	*init_l_data(t_l_error *error)
 	d->nocomment = 0;
 	d->order = 0;
 	d->ignoreerr = 0;
+	d->repairorder = 0;
 	d->err = error;
 	d->ants = NULL;
 	d->rooms = NULL;

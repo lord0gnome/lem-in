@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 15:16:32 by guiricha          #+#    #+#             */
-/*   Updated: 2016/08/24 18:12:46 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/08/25 19:20:54 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct		s_l_data
 	char			ignoreerr;
 	char			order;
 	char			command;
+	char			repairorder;
 	t_l_error		*err;
 	t_l_ants		*ants;
 	t_l_rooms		*rooms;
@@ -84,7 +85,7 @@ int	parse_fd(t_l_data *d);
 int	parse_arguments(t_l_data *d, int argc, char **argv);
 int			init_link(t_l_rooms *init, t_l_rooms *link);
 int			new_link(t_l_rooms *r1, t_l_rooms *r2);
-int			add_link(t_l_rooms *r1, t_l_rooms *r2);
+int			add_link(t_l_rooms *r1, t_l_rooms *r2, t_l_data *d);
 t_l_data	*init_l_data(t_l_error *error);
 t_l_error	*init_l_error(void);
 t_l_ants	*add_ants(t_l_data *d);

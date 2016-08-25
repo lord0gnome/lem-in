@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:05:22 by guiricha          #+#    #+#             */
-/*   Updated: 2016/08/23 15:21:30 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/08/25 17:47:11 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ int	parse_args_cnt(t_l_data *d, char **argv)
 			d->order = -1;
 		else if (argv[d->i][d->i2] == 'e')
 			d->ignoreerr = 1;
+		else if (argv[d->i][d->i2] == 'o')
+			d->repairorder = 1;
 		else
 			return (d->err->errno = 243);
 		d->i2++;

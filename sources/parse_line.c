@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/04 14:46:01 by guiricha          #+#    #+#             */
-/*   Updated: 2016/08/24 18:23:21 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/08/25 19:20:54 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,11 @@ int	is_link(char *link, t_l_data *d)
 	d->r1 = NULL;
 	d->r2 = NULL;
 	if ((d->i = ft_findfirstlastdelim(link, '-', 0)) == -1)
-		return (d->err->errno = 110);
+	{
+		ft_putstr("coudlnt't find what you were loking for in str - ");
+		ft_putendl(link);
+		return (1);
+	}
 	trav = d->rooms;
 	while (trav && !d->r1)
 	{
@@ -84,8 +88,12 @@ int	is_link(char *link, t_l_data *d)
 		trav = d->r2 ? trav : trav->next;
 	}
 	if (d->r1 && d->r2)
+	{
+		ft_putstr("found links in the string that follows -");
+		ft_putendl(link);
 		return (0);
-	return (d->err->errno = 112);
+	}
+	return (1);
 }
 
 int	ordered_flags(t_s_list *travel)
@@ -123,27 +131,20 @@ int	test_order(t_l_data *d)
 	while (last && last->next)
 		last = last->next;
 	lastbck = last;
-	if (!d->ignoreerr)
+	while (42)
 	{
-		while (42)
+		while (travel && travel->flag != 3)
+			travel = travel->next;
+		while (last && last->flag != 2)
+			last = last->prev;
+		if (!ordered_flags(first))
 		{
-			while (travel && travel->flag != 3)
-				travel = travel->next;
-			while (last && last->flag != 2)
-				last = last->prev;
-			if (!ordered_flags(first))
-			{
-				ft_wait(300);
-				ft_printf("\nadress of 1 \"%p\", adress of two \"%p\"\n", travel, last);
-				ft_printf("BEFOREEEEEEEst vals \"%s with %d\" and \"%s with %d\"\n", travel->str, travel->flag, last->str, last->flag);
-				ft_swap_members(&travel, &last);
-				ft_printf("afterrrrrrrrr vals \"%s with %d\" and \"%s with %d\"\n", travel->str,travel->flag, last->str, last->flag);
-				last = lastbck;
-				travel = first;
-			}
-			else
-				break ;
+			ft_swap_members(&travel, &last);
+			last = lastbck;
+			travel = first;
 		}
+		else
+			break ;
 	}
 	return (0);
 }
@@ -157,7 +158,7 @@ int	parse_line_test(t_l_data *d)
 	while (travel)
 	{
 		tmp = 0;
-		if (travel->flag == 1)
+		if (travel->flag == 1 && (d->ignoreerr || !travel->prev))
 		{
 			d->nants = ft_atoi(travel->str);
 		}
@@ -166,15 +167,17 @@ int	parse_line_test(t_l_data *d)
 			d->command = tmp;
 		}
 		else if (travel->flag == 3 && (!is_link(travel->str, d) ||
-				(ft_findfirstlastdelim(travel->str, '-', 0)) != -1))
+					(ft_findfirstlastdelim(travel->str, '-', 0)) != -1))
 		{
-			add_link(d->r1, d->r2);
+			add_link(d->r1, d->r2, d);
 		}
 		else if (travel->flag == 2)
 		{
 			if (!(add_room(d, ft_strgrab(travel->str, ' '))))
-			return (d->err->errno = 103);
+				return (d->err->errno = 103);
 		}
+		if (d->err->errno)
+			ft_putstr(travel->str);
 		travel = travel->next;
 	}
 	return (1);
@@ -196,20 +199,20 @@ int	parse_line(t_l_data *d)
 		}
 		else if (travel->flag && (tmp = is_command(travel->str, d)))
 		{
-		//	d->command = tmp;
+			//	d->command = tmp;
 			travel->flag = 4;
 		}
 		else if (travel->flag && (!is_link(travel->str, d) ||
-				(ft_findfirstlastdelim(travel->str, '-', 0)) != -1))
+					(ft_findfirstlastdelim(travel->str, '-', 0)) != -1))
 		{
-		//	add_link(d->r1, d->r2);
+			//	add_link(d->r1, d->r2);
 			travel->flag = 3;
 		}
 		else if (travel->flag && !is_room(travel->str, d))
 		{
 			travel->flag = 2;
-		/*	if (!(add_room(d, ft_strgrab(travel->str, ' '))))
-			return (d->err->errno = 103);*/
+			/*	if (!(add_room(d, ft_strgrab(travel->str, ' '))))
+				return (d->err->errno = 103);*/
 		}
 		travel = travel->next;
 	}
