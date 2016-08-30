@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:05:22 by guiricha          #+#    #+#             */
-/*   Updated: 2016/08/25 17:47:11 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/08/30 16:35:00 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,39 +30,6 @@ int	parse_fd(t_l_data *d)
 	return (1);
 }
 
-int	parse_args_cnt(t_l_data *d, char **argv)
-{
-	while (argv[d->i][d->i2])
-	{
-		if (argv[d->i][d->i2 + 1] && (!ft_strncmp(argv[d->i] + d->i2, "f_", 2)))
-		{
-			if (argv[d->i][d->i2 + 2])
-				d->fd = open(argv[d->i] + d->i2 + 2, O_RDONLY);
-			else
-				return (d->err->errno = 241);
-			if (d->fd < 0)
-				return (d->err->errno = 242);
-			d->i2 += ft_strlen(argv[d->i] + d->i2 + 1);
-		}
-		else if (argv[d->i][d->i2] == 'h' && d->help == 0)
-			d->help = 1;
-		else if (argv[d->i][d->i2] == 'v' && d->visual == 0)
-			d->visual = 1;
-		else if (argv[d->i][d->i2] == 'c' && d->nocomment == 0)
-			d->nocomment = 1;
-		else if (argv[d->i][d->i2] == 'l')
-			d->order = -1;
-		else if (argv[d->i][d->i2] == 'e')
-			d->ignoreerr = 1;
-		else if (argv[d->i][d->i2] == 'o')
-			d->repairorder = 1;
-		else
-			return (d->err->errno = 243);
-		d->i2++;
-	}
-	return (d->err->errno);
-}
-
 int	parse_arguments(t_l_data *d, int argc, char **argv)
 {
 	d->i = 0;
@@ -73,8 +40,35 @@ int	parse_arguments(t_l_data *d, int argc, char **argv)
 			return (d->err->errno = 240);
 		else
 			d->i2++;
-		if (parse_args_cnt(d, argv))
-			return (d->err->errno);
+		while (argv[d->i][d->i2])
+		{
+			if (argv[d->i][d->i2 + 1] && (!ft_strncmp(argv[d->i] + d->i2, "f_", 2)))
+			{
+				ft_putstr(argv[d->i]);
+				if (argv[d->i][d->i2 + 2])
+					d->fd = open(argv[d->i] + d->i2 + 2, O_RDONLY);
+				else
+					return (d->err->errno = 241);
+				if (d->fd < 0)
+					return (d->err->errno = 242);
+				d->i2 += ft_strlen(argv[d->i] + d->i2 + 1);
+			}
+			else if (argv[d->i][d->i2] == 'h' && d->help == 0)
+				d->help = 1;
+			else if (argv[d->i][d->i2] == 'v' && d->visual == 0)
+				d->visual = 1;
+			else if (argv[d->i][d->i2] == 'c' && d->nocomment == 0)
+				d->nocomment = 1;
+			else if (argv[d->i][d->i2] == 'l')
+				d->order = -1;
+			else if (argv[d->i][d->i2] == 'e')
+				d->ignoreerr = 1;
+			else if (argv[d->i][d->i2] == 'o')
+				d->repairorder = 1;
+			else
+				return (d->err->errno = 243);
+			d->i2++;
+		}
 	}
 	d->i = 0;
 	parse_fd(d);

@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/28 15:59:15 by guiricha          #+#    #+#             */
-/*   Updated: 2016/08/23 12:17:59 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/08/30 14:23:59 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_l_ants	*add_ants(t_l_data *d)
 {
-	int	antid;
+	int			antid;
 	t_l_ants	*new;
 	t_l_ants	*prev;
 	t_l_ants	*first;

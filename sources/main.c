@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 15:18:58 by guiricha          #+#    #+#             */
-/*   Updated: 2016/08/25 19:20:54 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/08/30 15:46:18 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,13 @@ int	main(int argc, char **argv)
 	if (read(data->fd, NULL, 0) < 0)
 		return (ft_printf("ERROR : Read a directory / Other read error"));
 	parse_line(data);
-	ft_print_members(data->lines);
 	if (data->err->errno != 0 && !data->ignoreerr)
 		return (ft_printf("ERROR : %d, %s\n", err->errno, err->errstr));
 	data->ants = add_ants(data);
 	if (data->repairorder)
 		test_order(data);
 	ft_print_members(data->lines);
-	parse_line_test(data);
+	init_all(data);
 	data->frst = data->rooms;
 	while (data->frst)
 	{

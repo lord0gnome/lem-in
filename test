@@ -1,8 +1,6 @@
 52
-seven-two
 ##start
 one 23 3
-one-three
 two 16 7
 #commentaire
 three 16 3
@@ -11,11 +9,13 @@ five 9 3
 six 1 5
 seven 4 8
 ##end
-zero-four
 zero 9 5
 ##notarealcommand
 zero-six
+seven-two
+zero-four
 five-two
+one-three
 three-five
 three-four
 #autre commentaire

@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/18 16:01:09 by guiricha          #+#    #+#             */
-/*   Updated: 2016/08/25 19:20:54 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/08/30 14:27:28 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,22 @@ int		init_link(t_l_rooms *init, t_l_rooms *link)
 	lr1to2->next = NULL;
 	lr1to2->roomptr = link;
 	init->links = lr1to2;
+	return (1);
+}
+
+int		new_link_for_one(t_l_rooms *r1, t_l_rooms *r2)
+{
+	t_l_links	*new1;
+	t_l_links	*lr1to2;
+
+	lr1to2 = r1->links;
+	if (!(new1 = (t_l_links *)malloc(sizeof(t_l_links))))
+		return (0);
+	while (lr1to2->next)
+		lr1to2 = lr1to2->next;
+	new1->next = NULL;
+	new1->roomptr = r2;
+	lr1to2->next = new1;
 	return (1);
 }
 
@@ -52,34 +68,24 @@ int		new_link(t_l_rooms *r1, t_l_rooms *r2)
 
 int		add_link(t_l_rooms *r1, t_l_rooms *r2, t_l_data *d)
 {
-	t_l_links	*t1;
-	t_l_links	*t2;
-
 	if (!r1 || !r2)
 		return (d->err->errno = 150);
-	if (!r1->links || !r2->links)
+	if (!r1->links && !r2->links)
 	{
-		if (!r1->links)
-			init_link(r1, r2);
-		if (!r2->links)
-			init_link(r2, r1);
+		init_link(r1, r2);
+		init_link(r2, r1);
+	}
+	else if (!r1->links)
+	{
+		init_link(r1, r2);
+		new_link_for_one(r2, r1);
+	}
+	else if (!r2->links)
+	{
+		init_link(r2, r1);
+		new_link_for_one(r1, r2);
 	}
 	else if (r1->links && r2->links)
 		new_link(r1, r2);
-	ft_printf("room one is %s, room two is %s ", r1->name, r2->name);
-	ft_printf("links are ");
-	t1 = r1->links;
-	t2 = r2->links;
-	while (t1)
-	{
-		ft_printf("%s - ", t1->roomptr->name);
-			t1 = t1->next;
-	}
-	while (t2)
-	{
-		ft_printf(" _ %s - ", t2->roomptr->name);
-			t2 = t2->next;
-	}
-	ft_putchar('\n');
 	return (0);
 }
