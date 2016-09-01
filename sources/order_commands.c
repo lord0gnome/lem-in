@@ -6,13 +6,13 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/30 13:13:57 by guiricha          #+#    #+#             */
-/*   Updated: 2016/08/30 14:27:01 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/01 13:13:12 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem_in.h"
 
-int		ordered_flags(t_s_list *travel)
+int		ordered_flags(t_s_list *travel, t_l_data *d)
 {
 	int			flag;
 	t_s_list	*first;
@@ -22,12 +22,12 @@ int		ordered_flags(t_s_list *travel)
 	while (first)
 	{
 		if (flag == 3 && first->flag == 2)
-			return (0);
+			return (d->err->errno = 130);
 		if (first->flag == 3)
 			flag = 3;
 		first = first->next;
 	}
-	return (1);
+	return (0);
 }
 
 void	test_order(t_l_data *d)
@@ -47,7 +47,7 @@ void	test_order(t_l_data *d)
 			travel = travel->next;
 		while (last && last->flag != 2)
 			last = last->prev;
-		if (!ordered_flags(d->lines))
+		if (ordered_flags(d->lines, d))
 		{
 			ft_swap_members(&travel, &last);
 			last = lastbck;

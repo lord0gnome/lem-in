@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 15:18:58 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/01 11:35:20 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/01 15:40:42 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,16 @@ int	main(int argc, char **argv)
 	if (read(data->fd, NULL, 0) < 0)
 		return (ft_printf("ERROR : Read a directory / Other read error"));
 	parse_line(data);
-	if (data->err->errno != 0 && !data->ignoreerr)
-		return (ft_printf("ERROR : %d, %s\n", err->errno, err->errstr));
-	data->ants = add_ants(data);
 	if (data->repairorder)
 		test_order(data);
 	ft_print_members(data->lines);
 	init_all(data);
+	if (data->err->errno != 0 && !data->ignoreerr)
+		ft_printf("ERROR : %d, %s\n", err->errno, err->errstr);
+	if (data->nants == -1)
+		data->err->errno = 132;
+	test_strt_end(data->rooms, err);
+	data->ants = add_ants(data);
 	data->frst = data->rooms;
 	while (data->frst)
 	{
@@ -48,7 +51,11 @@ int	main(int argc, char **argv)
 		ft_putchar('\n');
 		data->frst = data->frst->next;
 	}
-		ft_printf("ant nbr is %d\n", data->nants);
+	while(data->ants)
+	{
+		ft_printf("ant nbr is %d\n", data->ants->id);
+		data->ants = data->ants->next;
+	}
 	if (data->err->errno != 0 && !data->ignoreerr)
 		return (ft_printf("ERROR : %d, %s\n", err->errno, err->errstr));
 	return (0);

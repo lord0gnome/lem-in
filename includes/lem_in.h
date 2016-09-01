@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 15:16:32 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/01 12:23:30 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/01 15:37:49 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,10 @@ typedef struct		s_l_data
 	t_s_list		*lines;
 }					t_l_data;
 
+int		test_ants_first(t_s_list *antsline, t_l_error *err);
+int		test_strt_end(t_l_rooms *start, t_l_error *err);
 void	print_arguments(t_l_data *d);
+int		ordered_flags(t_s_list *travel, t_l_data *d);
 void	test_order(t_l_data *d);
 int	is_command(char *str, t_l_data *d);
 int	parse_fd(t_l_data *d);

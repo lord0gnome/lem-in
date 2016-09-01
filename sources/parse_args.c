@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:05:22 by guiricha          #+#    #+#             */
-/*   Updated: 2016/08/30 16:35:00 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/01 14:40:47 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,45 +32,47 @@ int	parse_fd(t_l_data *d)
 
 int	parse_arguments(t_l_data *d, int argc, char **argv)
 {
-	d->i = 0;
-	while (++d->i < argc)
+	size_t		i;
+	size_t		i2;
+
+	i = 0;
+	while (++i < (size_t)argc)
 	{
-		d->i2 = 0;
-		if (argv[d->i][d->i2] && argv[d->i][d->i2] != '-')
+		i2 = 0;
+		if (argv[i][i2] && argv[i][i2] != '-')
 			return (d->err->errno = 240);
 		else
-			d->i2++;
-		while (argv[d->i][d->i2])
+			i2++;
+		while (argv[i][i2])
 		{
-			if (argv[d->i][d->i2 + 1] && (!ft_strncmp(argv[d->i] + d->i2, "f_", 2)))
+			if (argv[i][i2 + 1] && (!ft_strncmp(argv[i] + i2, "f_", 2)))
 			{
-				ft_putstr(argv[d->i]);
-				if (argv[d->i][d->i2 + 2])
-					d->fd = open(argv[d->i] + d->i2 + 2, O_RDONLY);
+				ft_putstr(argv[i] + i2);
+				if (argv[i][i2 + 2])
+					d->fd = open(argv[i] + i2 + 2, O_RDONLY);
 				else
 					return (d->err->errno = 241);
 				if (d->fd < 0)
 					return (d->err->errno = 242);
-				d->i2 += ft_strlen(argv[d->i] + d->i2 + 1);
+				break ;
 			}
-			else if (argv[d->i][d->i2] == 'h' && d->help == 0)
+			else if (argv[i][i2] == 'h')
 				d->help = 1;
-			else if (argv[d->i][d->i2] == 'v' && d->visual == 0)
+			else if (argv[i][i2] == 'v')
 				d->visual = 1;
-			else if (argv[d->i][d->i2] == 'c' && d->nocomment == 0)
+			else if (argv[i][i2] == 'c')
 				d->nocomment = 1;
-			else if (argv[d->i][d->i2] == 'l')
+			else if (argv[i][i2] == 'l')
 				d->order = -1;
-			else if (argv[d->i][d->i2] == 'e')
+			else if (argv[i][i2] == 'e')
 				d->ignoreerr = 1;
-			else if (argv[d->i][d->i2] == 'o')
+			else if (argv[i][i2] == 'o')
 				d->repairorder = 1;
 			else
 				return (d->err->errno = 243);
-			d->i2++;
+			i2++;
 		}
 	}
-	d->i = 0;
 	parse_fd(d);
 	return (d->err->errno = 0);
 }
