@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/04 14:46:01 by guiricha          #+#    #+#             */
-/*   Updated: 2016/08/30 16:31:50 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/01 12:23:30 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,8 +103,7 @@ int	init_all(t_l_data *d)
 		{
 			d->command = tmp;
 		}
-		else if (travel->flag == 3 && (!is_link(travel->str, d) ||
-					(ft_findfirstlastdelim(travel->str, '-', 0)) != -1))
+		else if (travel->flag == 3 && (!is_link(travel->str, d)))
 		{
 			add_link(d->r1, d->r2, d);
 		}
