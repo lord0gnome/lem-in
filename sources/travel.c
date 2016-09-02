@@ -6,37 +6,41 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/02 12:10:14 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/02 14:46:38 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/02 15:16:11 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem_in.h"
 
-void	rec_set_depths(t_l_rooms *start, int *depth)
+void	rec_set_depths(t_l_rooms *start, int depth)
 {
-	if (start->used)
+	t_l_links	*links;
+
+	if (start->used == 1)
 		return ;
+	if (start->depth == -1)
+		start->depth = depth;
 	start->used = 1;
-	*depth = start->depth + 1;
 	ft_printf("calling rec func on %s ", start->name);
-	if (start->depth == -1 || start->depth > *depth)
+	links = start->links;
+	depth++;
+	while (links)
 	{
-		ft_printf("whose depth was %d and its ", start->depth);
-		start->depth = *depth;
-		ft_printf("depth has been set at %d\n", start->depth);
+		if (depth < links->roomptr->depth)
+			links->roomptr->depth = depth;
+		links = links->next;
 	}
-	else
-		ft_printf("depth has not been set and stays at %d\n", start->depth);
-	while (start->links)
+	links = start->links;
+	while (links)
 	{
-		rec_set_depths(start->links->roomptr, depth);
-		start->links = start->links->next;
+		rec_set_depths(links->roomptr, depth);
+		links = links->next;
 	}
 }
 
 void	set_depths(t_l_rooms *start)
 {
-	int depth;
+	int			depth;
 	t_l_links	*links;
 
 	links = NULL;
@@ -46,17 +50,17 @@ void	set_depths(t_l_rooms *start)
 		if (!start->used && start->depth == -1)
 		{
 			start->depth = depth;
-		depth++;
+			depth++;
 		}
 		start->used = 1;
 		links = start->links;
 		while (links)
 		{
 			if (links->roomptr->depth == -1)
-			links->roomptr->depth = depth;
+				links->roomptr->depth = depth;
 			links->roomptr->used = 1;
 			while (links && links->roomptr->used)
-			links = links->next;
+				links = links->next;
 		}
 		start = start->links->roomptr;
 	}

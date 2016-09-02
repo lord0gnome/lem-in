@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/04 14:46:01 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/02 14:46:44 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/02 14:51:44 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int	init_all(t_l_data *d)
 		if (travel->flag == 5)
 		{
 			if (!test_ants_first(travel, d->err))
-			d->nants = ft_atoi(travel->str);
+				d->nants = ft_atoi(travel->str);
 			else
 				return (d->err->errno);
 		}
@@ -122,7 +122,7 @@ int	init_all(t_l_data *d)
 				d->err->errno = 103;
 		}
 		if (d->err->errno && !d->ignoreerr)
-			return(0);
+			return (0);
 		flag = travel->flag == 3 ? 3 : 2;
 		travel = travel->next;
 	}
@@ -145,7 +145,8 @@ int	parse_line(t_l_data *d)
 			travel->flag = 4;
 			d->command = 0;
 		}
-		else if (travel->flag && (!is_link(travel->str, d) || (ft_findfirstlastdelim(travel->str, '-', 0) != -1)))
+		else if (travel->flag && (!is_link(travel->str, d) ||
+				(ft_findfirstlastdelim(travel->str, '-', 0) != -1)))
 			travel->flag = 3;
 		else if (travel->flag && !is_room(travel->str, d))
 			travel->flag = 2;

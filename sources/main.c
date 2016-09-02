@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 15:18:58 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/02 14:46:44 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/02 15:10:58 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,9 @@ int	main(int argc, char **argv)
 	data->frst = data->rooms;
 	while (data->frst && data->frst->startend != 1)
 		data->frst = data->frst->next;
-	rec_set_depths(data->frst, &depth);
+	rec_set_depths(data->frst, depth);
 	ft_print_members(data->lines);
+	data->frst = data->rooms;
 	while (data->frst)
 	{
 		ft_printf("room %s has links below and is %d room, it's depth is %d, and it's traveled flag is %d\n", data->frst->name, data->frst->startend, data->frst->depth, data->frst->used);

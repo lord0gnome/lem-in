@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 15:16:32 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/02 14:46:44 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/02 15:01:18 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ typedef struct		s_l_data
 	t_s_list		*lines;
 }					t_l_data;
 
-void	rec_set_depths(t_l_rooms *start, int *depth);
+void	rec_set_depths(t_l_rooms *start, int depth);
 int		test_ants_first(t_s_list *antsline, t_l_error *err);
 int		test_strt_end(t_l_rooms *start, t_l_error *err);
 void	print_arguments(t_l_data *d);
