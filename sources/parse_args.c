@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:05:22 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/01 14:40:47 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/02 11:18:05 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ int	parse_arguments(t_l_data *d, int argc, char **argv)
 		{
 			if (argv[i][i2 + 1] && (!ft_strncmp(argv[i] + i2, "f_", 2)))
 			{
-				ft_putstr(argv[i] + i2);
 				if (argv[i][i2 + 2])
 					d->fd = open(argv[i] + i2 + 2, O_RDONLY);
 				else

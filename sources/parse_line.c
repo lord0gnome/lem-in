@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/04 14:46:01 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/01 17:03:30 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/02 14:46:44 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,10 @@ int	parse_line(t_l_data *d)
 		if (travel->flag && d->nants == -1 && is_ants(travel->str))
 			travel->flag = 5;
 		else if (travel->flag && (tmp = is_command(travel->str, d)))
+		{
 			travel->flag = 4;
+			d->command = 0;
+		}
 		else if (travel->flag && (!is_link(travel->str, d) || (ft_findfirstlastdelim(travel->str, '-', 0) != -1)))
 			travel->flag = 3;
 		else if (travel->flag && !is_room(travel->str, d))

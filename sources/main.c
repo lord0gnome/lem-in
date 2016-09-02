@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 15:18:58 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/01 15:40:42 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/02 14:46:44 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ int	main(int argc, char **argv)
 {
 	t_l_data	*data;
 	t_l_error	*err;
+	int	depth;
 
+	depth = 0;
 	err = init_l_error();
 	data = init_l_data(err);
 	parse_arguments(data, argc, argv);
@@ -40,9 +42,13 @@ int	main(int argc, char **argv)
 	test_strt_end(data->rooms, err);
 	data->ants = add_ants(data);
 	data->frst = data->rooms;
+	while (data->frst && data->frst->startend != 1)
+		data->frst = data->frst->next;
+	rec_set_depths(data->frst, &depth);
+	ft_print_members(data->lines);
 	while (data->frst)
 	{
-		ft_printf("room %s has links below and is %d room\n", data->frst->name, data->frst->startend);
+		ft_printf("room %s has links below and is %d room, it's depth is %d, and it's traveled flag is %d\n", data->frst->name, data->frst->startend, data->frst->depth, data->frst->used);
 		while (data->frst->links)
 		{
 			ft_putendl(data->frst->links->roomptr->name);
@@ -53,7 +59,7 @@ int	main(int argc, char **argv)
 	}
 	while(data->ants)
 	{
-		ft_printf("ant nbr is %d\n", data->ants->id);
+		ft_printf("ant nbr is %d\nIts room is %s\n", data->ants->id, data->ants->room->name);
 		data->ants = data->ants->next;
 	}
 	if (data->err->errno != 0 && !data->ignoreerr)
