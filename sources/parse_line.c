@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/04 14:46:01 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/02 14:51:44 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/04 16:39:53 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,7 @@ int	init_all(t_l_data *d)
 	{
 		tmp = 0;
 		if (travel->flag == 2 && flag == 3)
-		{
 			return (d->err->errno = 131);
-		}
 		if (travel->flag == 5)
 		{
 			if (!test_ants_first(travel, d->err))
@@ -109,18 +107,12 @@ int	init_all(t_l_data *d)
 				return (d->err->errno);
 		}
 		else if (travel->flag == 4 && (tmp = is_command(travel->str, d)))
-		{
 			d->command = tmp;
-		}
 		else if (travel->flag == 3 && (!is_link(travel->str, d)))
-		{
 			add_link(d->r1, d->r2, d);
-		}
 		else if (travel->flag == 2)
-		{
 			if (!(add_room(d, ft_strgrab(travel->str, ' '))))
 				d->err->errno = 103;
-		}
 		if (d->err->errno && !d->ignoreerr)
 			return (0);
 		flag = travel->flag == 3 ? 3 : 2;

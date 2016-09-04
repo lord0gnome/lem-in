@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/02 12:10:14 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/02 15:16:11 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/04 16:17:37 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	rec_set_depths(t_l_rooms *start, int depth)
 	if (start->depth == -1)
 		start->depth = depth;
 	start->used = 1;
-	ft_printf("calling rec func on %s ", start->name);
 	links = start->links;
 	depth++;
 	while (links)
