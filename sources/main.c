@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 15:18:58 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/04 16:39:53 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/05 19:17:39 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,24 @@ int	main(int argc, char **argv)
 	test_strt_end(data->rooms, err);
 	data->ants = add_ants(data);
 	data->frst = data->rooms;
-	rec_set_depths(data->frst, depth);
 	ft_print_members(data->lines);
-	data->frst = data->rooms;
 	while (data->frst)
 	{
 		set_larray_for_room(data->frst);
-	//	ft_printf("room %s has links below and is %d room, it's depth is %d, and it's traveled flag is %d\n", data->frst->name, data->frst->startend, data->frst->depth, data->frst->used);
+		while (data->frst->larray_len--)
+		{
+			ft_putstr(data->frst->larray[0]->rptr->name);
+		}
+		data->frst = data->frst->next;
+	}
+	data->frst = data->rooms;
+	while (data->frst && data->frst->startend != 2)
+		data->frst = data->frst->next;
+	set_depth_recursive(data->frst);
+	data->frst = data->rooms;
+	while (data->frst)
+	{
+		ft_printf("room %s has links below and is %d room, it's depth is %d.\n", data->frst->name, data->frst->startend, data->frst->depth);
 	/*	while (data->frst->links)
 		{
 			ft_putendl(data->frst->links->roomptr->name);
@@ -58,7 +69,8 @@ int	main(int argc, char **argv)
 
 		data->frst = data->frst->next;
 	}
-	while(data->ants)
+	data->frst = data->rooms;
+	while(data->ants && data->ants->room)
 	{
 		ft_printf("ant nbr is %d\nIts room is %s\n", data->ants->id, data->ants->room->name);
 		data->ants = data->ants->next;

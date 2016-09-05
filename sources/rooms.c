@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/04 14:06:43 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/04 12:54:24 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/05 19:08:44 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ t_l_rooms	*create_rooms(t_l_data *d, char *name)
 	new->next = NULL;
 	new->links = NULL;
 	new->larray = NULL;
+	new->larray_len = 0;
 	new->x = d->cx;
 	new->y = d->cy;
 	new->depth = -1;
-	new->used = 0;
 	new->name = ft_strdup(name);
 	new->startend = d->command;
 	d->rooms = new;
@@ -46,10 +46,10 @@ int			add_room(t_l_data *d, char *name)
 		new->next = NULL;
 		new->links = NULL;
 		new->larray = NULL;
+		new->larray_len = 0;
 		new->x = d->cx;
 		new->y = d->cy;
 		new->depth = -1;
-		new->used = 0;
 		new->name = ft_strdup(name);
 		new->startend = d->command;
 		first->next = new;

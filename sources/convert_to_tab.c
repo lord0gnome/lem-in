@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/04 12:40:57 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/04 16:21:43 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/05 19:17:39 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	set_larray_for_room(t_l_rooms *first)
 	t_l_larray	**new;
 	t_l_links	*links;
 
+	if (!first)
+		return (-1);
 	links = first->links;
 	n = get_link_list_length(first->links);
 	first->larray_len = n;
