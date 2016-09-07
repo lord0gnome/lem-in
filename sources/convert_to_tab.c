@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/04 12:40:57 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/05 19:17:39 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/07 16:11:41 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,6 @@ int	set_larray_for_room(t_l_rooms *first)
 		new[n]->rptr = links->roomptr;
 		links = links->next;
 	}
+	first->larray = new;
 	return (1);
 }

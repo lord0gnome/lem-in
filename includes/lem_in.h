@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 15:16:32 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/05 19:17:39 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/07 18:21:59 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,7 @@ typedef struct		s_l_links
 	struct s_l_rooms		*roomptr;
 	struct s_l_links		*next;
 }					t_l_links;
-/*
-typedef struct		s_l_solu
-{
 
-	struct s_l_solu	*next;
-}					t_l_solu;
-*/
 typedef struct		s_l_rooms
 {
 	char				*name;
@@ -69,6 +63,7 @@ typedef struct		s_l_data
 	char			*l;
 	char			*newl;
 	int				nants;
+	int				nrooms;
 	int				i;
 	int				i2;
 	int				fd;
@@ -85,12 +80,15 @@ typedef struct		s_l_data
 	t_l_ants		*ants;
 	t_l_rooms		*rooms;
 	t_l_rooms		*frst;
+	t_l_rooms		**all;
 	t_l_rooms		*r1;
 	t_l_rooms		*r2;
 	t_s_list		*lines;
 }					t_l_data;
 
-int		set_depth_recursive(t_l_rooms *end);
+void	init_room_tab(t_l_data *d, t_l_rooms *first);
+void	set_null_room_tab(t_l_rooms **tab, int nrooms);
+int		count_rooms(t_l_rooms *first);
 int		get_link_list_length(t_l_links *list);
 int		set_larray_for_room(t_l_rooms *first);
 int		test_ants_first(t_s_list *antsline, t_l_error *err);

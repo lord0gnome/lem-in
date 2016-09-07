@@ -6,11 +6,24 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/01 13:47:55 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/02 14:50:51 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/07 17:28:50 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem_in.h"
+
+int	count_rooms(t_l_rooms *first)
+{
+	int	ret;
+
+	ret = 0;
+	while (first)
+	{
+		ret++;
+		first = first->next;
+	}
+	return (ret);
+}
 
 int	test_ants_first(t_s_list *antsline, t_l_error *err)
 {

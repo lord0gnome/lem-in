@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 15:18:58 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/05 19:17:39 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/07 18:21:59 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int	main(int argc, char **argv)
 		test_order(data);
 	ft_print_members(data->lines);
 	init_all(data);
+	data->nrooms = count_rooms(data->rooms);
+	ft_printf("number of rooms is [%d]\n", data->nrooms);
 	if (data->err->errno != 0 && !data->ignoreerr)
 		ft_printf("ERROR : %d, %s\n", err->errno, err->errstr);
 	if (data->nants == -1)
@@ -42,24 +44,23 @@ int	main(int argc, char **argv)
 	test_strt_end(data->rooms, err);
 	data->ants = add_ants(data);
 	data->frst = data->rooms;
-	ft_print_members(data->lines);
+	//ft_print_members(data->lines);
 	while (data->frst)
 	{
 		set_larray_for_room(data->frst);
-		while (data->frst->larray_len--)
+		/*while (data->frst->larray_len--)
 		{
 			ft_putstr(data->frst->larray[0]->rptr->name);
-		}
+		}*/
 		data->frst = data->frst->next;
 	}
 	data->frst = data->rooms;
-	while (data->frst && data->frst->startend != 2)
-		data->frst = data->frst->next;
-	set_depth_recursive(data->frst);
-	data->frst = data->rooms;
-	while (data->frst)
+	init_room_tab(data, data->frst);
+	while (data->all[data->nrooms--])
 	{
-		ft_printf("room %s has links below and is %d room, it's depth is %d.\n", data->frst->name, data->frst->startend, data->frst->depth);
+		ft_printf("room %s has links below and is %d room, it's depth is %d.\n", data->all[data->nrooms]->name, data->all[data->nrooms]->startend, data->all[data->nrooms]->depth);
+		while (data->frst->larray_len--)
+			ft_printf("[%s]", data->frst->larray[data->frst->larray_len]->rptr->name);
 	/*	while (data->frst->links)
 		{
 			ft_putendl(data->frst->links->roomptr->name);
@@ -68,13 +69,9 @@ int	main(int argc, char **argv)
 		ft_putchar('\n');*/
 
 		data->frst = data->frst->next;
+		ft_putchar('\n');
 	}
 	data->frst = data->rooms;
-	while(data->ants && data->ants->room)
-	{
-		ft_printf("ant nbr is %d\nIts room is %s\n", data->ants->id, data->ants->room->name);
-		data->ants = data->ants->next;
-	}
 	if (data->err->errno != 0 && !data->ignoreerr)
 		return (ft_printf("ERROR : %d, %s\n", err->errno, err->errstr));
 	return (0);

@@ -5,64 +5,38 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/09/05 16:20:48 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/05 19:17:39 by guiricha         ###   ########.fr       */
+/*   Created: 2016/09/07 17:22:17 by guiricha          #+#    #+#             */
+/*   Updated: 2016/09/07 17:57:14 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem_in.h"
 
-int		set_depth_recursive(t_l_rooms *end)
+void	set_depth(t_l_data *d, t_l_rooms *end)
 {
-	int larray_len;
-	int	depth;
-	t_l_links	*new;
-	t_l_links	*new2;
+	int		*t;
+	int		lalen;
+	int		depth;
+	size_t	index;
+	
 
+	index = 0;
 	depth = 0;
-	new = (t_l_links *)malloc(sizeof(t_l_links));
-	if (!new)
-		return (0);
-	new->roomptr = end;
-	new->next = NULL;
-	new->roomptr->depth = depth;
-	depth++;
-	while (new && new->roomptr)
+	t = (int *)malloc(sizeof(int) * (d->nrooms + 1));
+	t[d->nrooms] = -2; //end of array
+	while (index < d->nrooms)
 	{
-		larray_len = new->roomptr->larray_len;
-		ft_putnbr(larray_len);
-		while (larray_len--)
-		{
-			if (new->roomptr->larray[larray_len] && new->roomptr->larray[larray_len]->rptr->depth == -1)
-			{
-				ft_putstr("I like cake");
-				ft_putstr(new->roomptr->larray[larray_len]->rptr->name);
-			new->roomptr->larray[larray_len]->rptr->depth = depth;
-			new2 = (t_l_links *)malloc(sizeof(t_l_links));
-			new2->next = NULL;
-			new->next = new2;
-			new2->roomptr = new->roomptr->larray[larray_len]->rptr;
-			}
-		}
-		new = new->next;
+		t[index] = -1;
+		index++;
 	}
-	return (0);
-}
-
-void	set_room_depths_from_end(t_l_rooms *end)
-{
-	int	depth;
-	int	larray_len;
-
-	depth = 1;
-	end->depth = 0;
-	larray_len = end->larray_len;
-	while (42)
+	index = 0;
+	while (index < d->nrooms)
 	{
-		while (larray_len)
-		{
-			larray_len--;
-			end->larray[larray_len]->rptr->depth = depth;
-		}
+	lalen = end->larray_len;
+	while (lalen--)
+	{
+		end->larray[lalen]->rptr->depth = end->larray[lalen]->rptr->depth == -1 ? depth : end->larray[lalen]->rptr->depth;
 	}
+	}
+
 }
