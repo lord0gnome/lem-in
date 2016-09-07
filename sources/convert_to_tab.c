@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/04 12:40:57 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/07 16:11:41 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/07 20:52:22 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,29 +25,39 @@ int	get_link_list_length(t_l_links *list)
 	return (ret);
 }
 
-int	set_larray_for_room(t_l_rooms *first)
+int	set_lindexes_for_room(t_l_rooms **t, t_l_data *d)
 {
 	int			n;
-	t_l_larray	**new;
 	t_l_links	*links;
+	int			index;
+	int			i2;
+	int			*new;
 
-	if (!first)
-		return (-1);
-	links = first->links;
-	n = get_link_list_length(first->links);
-	first->larray_len = n;
-	new = (t_l_larray **)malloc(sizeof(t_l_larray *) * (n + 1));
-	if (!new)
-		return (-1);
-	new[n] = NULL;
-	while (n--)
+	index = 0;
+	while (index < d->nrooms)
 	{
-		new[n] = (t_l_larray *)malloc(sizeof(t_l_larray));
-		if (!new[n])
+		ft_printf("current room at index [%d] is [%s]\n", index, t[index]->name);
+		links = t[index]->links;
+		n = get_link_list_length(links);
+		new = (int *)malloc(sizeof(int) * (n + 2));
+		if (!new)
 			return (-1);
-		new[n]->rptr = links->roomptr;
-		links = links->next;
+		ft_printf("created new table of ints of length %d and setting indexes %d to -1 and 0 to %d\n", n + 2, n, n);
+		new[n] = -1;
+		new[0] = n;
+		i2 = index;
+		while (n-- && links)
+		{
+			index = 0;
+			while (t[index] != links->roomptr)
+				index++;
+			new[n + 1] = index;
+			ft_printf("new link for room [%s] with name %s\n", t[i2]->name,t[index]->name);
+			links = links->next;
+		}
+		t[index]->lindexes = new;
+		index = i2;
+		index++;
 	}
-	first->larray = new;
 	return (1);
 }

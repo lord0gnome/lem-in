@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 15:16:32 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/07 18:21:59 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/07 20:52:22 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct		s_l_rooms
 	struct s_l_rooms	*next;
 	struct s_l_links	*links;
 	int					larray_len;
+	int					*lindexes;
 	struct s_l_larray	**larray;
 }					t_l_rooms;
 
@@ -90,7 +91,7 @@ void	init_room_tab(t_l_data *d, t_l_rooms *first);
 void	set_null_room_tab(t_l_rooms **tab, int nrooms);
 int		count_rooms(t_l_rooms *first);
 int		get_link_list_length(t_l_links *list);
-int		set_larray_for_room(t_l_rooms *first);
+int		set_lindexes_for_room(t_l_rooms **t, t_l_data *d);
 int		test_ants_first(t_s_list *antsline, t_l_error *err);
 int		test_strt_end(t_l_rooms *start, t_l_error *err);
 void	print_arguments(t_l_data *d);

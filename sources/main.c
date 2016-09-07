@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 15:18:58 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/07 18:21:59 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/07 20:52:22 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	main(int argc, char **argv)
 	t_l_data	*data;
 	t_l_error	*err;
 	int	depth;
+	int	number;
 
 	depth = 0;
 	err = init_l_error();
@@ -47,7 +48,6 @@ int	main(int argc, char **argv)
 	//ft_print_members(data->lines);
 	while (data->frst)
 	{
-		set_larray_for_room(data->frst);
 		/*while (data->frst->larray_len--)
 		{
 			ft_putstr(data->frst->larray[0]->rptr->name);
@@ -56,20 +56,17 @@ int	main(int argc, char **argv)
 	}
 	data->frst = data->rooms;
 	init_room_tab(data, data->frst);
-	while (data->all[data->nrooms--])
+	set_lindexes_for_room(data->all, data);
+	number = 0;
+	while (number < data->nrooms)
 	{
-		ft_printf("room %s has links below and is %d room, it's depth is %d.\n", data->all[data->nrooms]->name, data->all[data->nrooms]->startend, data->all[data->nrooms]->depth);
-		while (data->frst->larray_len--)
-			ft_printf("[%s]", data->frst->larray[data->frst->larray_len]->rptr->name);
+			
 	/*	while (data->frst->links)
 		{
 			ft_putendl(data->frst->links->roomptr->name);
 			data->frst->links = data->frst->links->next;
 		}
 		ft_putchar('\n');*/
-
-		data->frst = data->frst->next;
-		ft_putchar('\n');
 	}
 	data->frst = data->rooms;
 	if (data->err->errno != 0 && !data->ignoreerr)
