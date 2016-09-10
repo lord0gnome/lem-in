@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/10 13:32:03 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/10 15:55:04 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/10 18:42:51 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	megatest(t_l_data *d)
 	nrooms = 0;
 	while (nrooms < tmpli)
 	{
-		ft_printf("%2d in all is %4s, startend[%d], depth[%d], x[%02d], y[%02d], lindexes[0]==[%d]\n",
+		ft_printf("%4d ind is %5s, startend[%d], depth[%3d], x[%03d], y[%03d], lindexes[0]==[%d]\n",
 				nrooms,
 				a[nrooms]->name,
 				a[nrooms]->startend,
@@ -38,7 +38,7 @@ void	megatest(t_l_data *d)
 			li = 0;
 			while (li++ < a[nrooms]->lindexes[0])
 			{
-				ft_printf("link name is %4s, startend[%d], depth[%d], x[%02d], y[%02d], lindexes[0]==[%d]\n",
+				ft_printf("link name is %5s, startend[%d], depth[%3d], x[%03d], y[%03d], lindexes[0]==[%d]\n",
 						a[a[nrooms]->lindexes[li]]->name,
 						a[a[nrooms]->lindexes[li]]->startend,
 						a[a[nrooms]->lindexes[li]]->depth,

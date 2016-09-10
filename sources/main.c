@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 15:18:58 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/10 16:18:41 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/10 18:42:51 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	main(int argc, char **argv)
 	parse_line(data);
 	if (data->repairorder)
 		test_order(data);
-	ft_print_members(data->lines);
+	//ft_print_members(data->lines);
 	init_all(data);
 	data->nrooms = count_rooms(data->rooms);
 	ft_printf("number of rooms is [%d]\n", data->nrooms);
