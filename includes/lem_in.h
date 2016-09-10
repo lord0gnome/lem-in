@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 15:16:32 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/07 20:52:22 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/10 16:18:41 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ typedef struct		s_l_data
 	t_s_list		*lines;
 }					t_l_data;
 
+void	set_depth(t_l_rooms **all, t_l_data *d);
+void	megatest(t_l_data *d);
 void	init_room_tab(t_l_data *d, t_l_rooms *first);
 void	set_null_room_tab(t_l_rooms **tab, int nrooms);
 int		count_rooms(t_l_rooms *first);

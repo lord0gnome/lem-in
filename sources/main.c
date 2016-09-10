@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 15:18:58 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/07 20:52:22 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/10 16:18:41 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ int	main(int argc, char **argv)
 	t_l_error	*err;
 	int	depth;
 	int	number;
+	int	n2;
 
+	n2 = 0;
 	depth = 0;
 	err = init_l_error();
 	data = init_l_data(err);
@@ -45,29 +47,24 @@ int	main(int argc, char **argv)
 	test_strt_end(data->rooms, err);
 	data->ants = add_ants(data);
 	data->frst = data->rooms;
-	//ft_print_members(data->lines);
-	while (data->frst)
-	{
-		/*while (data->frst->larray_len--)
-		{
-			ft_putstr(data->frst->larray[0]->rptr->name);
-		}*/
-		data->frst = data->frst->next;
-	}
-	data->frst = data->rooms;
 	init_room_tab(data, data->frst);
 	set_lindexes_for_room(data->all, data);
 	number = 0;
-	while (number < data->nrooms)
+	set_depth(data->all, data);
+	megatest(data);
+/*	while (number < data->nrooms)
 	{
-			
-	/*	while (data->frst->links)
+		ft_printf("Room is [%s] with values below\nstartend :	%d\ndepth :		%d\nx/y :		%d / %d\n", data->all[number]->name, data->all[number]->startend, data->all[number]->depth, data->all[number]->x, data->all[number]->y);
+		ft_printf("it has %d links\n",data->all[number]->lindexes[0]);
+		n2 = data->all[number]->lindexes[0];
+		while (n2 != 0)
 		{
-			ft_putendl(data->frst->links->roomptr->name);
-			data->frst->links = data->frst->links->next;
+			ft_printf("%s\n", data->all[data->all[number]->lindexes[n2]]->name);
+			n2--;
 		}
-		ft_putchar('\n');*/
-	}
+		ft_putchar('\n');
+		number++;
+	}*/
 	data->frst = data->rooms;
 	if (data->err->errno != 0 && !data->ignoreerr)
 		return (ft_printf("ERROR : %d, %s\n", err->errno, err->errstr));

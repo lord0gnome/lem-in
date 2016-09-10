@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/04 14:46:01 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/04 16:39:53 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/08 16:36:45 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,9 +110,11 @@ int	init_all(t_l_data *d)
 			d->command = tmp;
 		else if (travel->flag == 3 && (!is_link(travel->str, d)))
 			add_link(d->r1, d->r2, d);
-		else if (travel->flag == 2)
+		else if (travel->flag == 2 && !is_room(travel->str, d))
+		{
 			if (!(add_room(d, ft_strgrab(travel->str, ' '))))
 				d->err->errno = 103;
+		}
 		if (d->err->errno && !d->ignoreerr)
 			return (0);
 		flag = travel->flag == 3 ? 3 : 2;
@@ -133,10 +135,7 @@ int	parse_line(t_l_data *d)
 		if (travel->flag && d->nants == -1 && is_ants(travel->str))
 			travel->flag = 5;
 		else if (travel->flag && (tmp = is_command(travel->str, d)))
-		{
-			travel->flag = 4;
-			d->command = 0;
-		}
+			travel->flag = d->command = 0 ? 4 : 4;
 		else if (travel->flag && (!is_link(travel->str, d) ||
 				(ft_findfirstlastdelim(travel->str, '-', 0) != -1)))
 			travel->flag = 3;
