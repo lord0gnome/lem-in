@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/10 14:19:13 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/10 18:42:51 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/11 19:31:57 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,5 @@ void	set_depth(t_l_rooms **all, t_l_data *d)
 		}
 		irooms++;
 	}
+	d->allindex = indexes;
 }

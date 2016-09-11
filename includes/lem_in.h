@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 15:16:32 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/10 18:42:51 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/11 19:46:32 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # include "../libft/libft.h"
 # include "../printf/ft_printf.h"
 # include "../gnl/get_next_line.h"
+# include "color.h"
 #define START 1
 #define END 2
 #define NOCOMMAND 0
@@ -82,6 +83,7 @@ typedef struct		s_l_data
 	t_l_rooms		*rooms;
 	t_l_rooms		*frst;
 	t_l_rooms		**all;
+	int				*allindex;
 	t_l_rooms		*r1;
 	t_l_rooms		*r2;
 	t_s_list		*lines;
