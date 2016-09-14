@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 15:18:58 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/10 18:42:51 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/14 20:31:49 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,17 @@ int	main(int argc, char **argv)
 	if (data->nants == -1)
 		data->err->errno = 132;
 	test_strt_end(data->rooms, err);
-	data->ants = add_ants(data);
+//	data->ants = add_ants(data);
 	data->frst = data->rooms;
+	remove_noconnects(data->frst, data);
 	init_room_tab(data, data->frst);
 	set_lindexes_for_room(data->all, data);
 	number = 0;
 	set_depth(data->all, data);
+	//flip_allindex(data->allindex);
 	megatest(data);
+	ft_printf("number of rooms is [%d]\n", data->nrooms);
+	resolve(data, data->all, data->allindex);
 /*	while (number < data->nrooms)
 	{
 		ft_printf("Room is [%s] with values below\nstartend :	%d\ndepth :		%d\nx/y :		%d / %d\n", data->all[number]->name, data->all[number]->startend, data->all[number]->depth, data->all[number]->x, data->all[number]->y);
