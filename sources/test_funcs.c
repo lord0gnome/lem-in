@@ -6,11 +6,25 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/01 13:47:55 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/14 20:31:49 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/15 19:08:21 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem_in.h"
+
+void	print_path(t_l_p *path, t_l_data *d)
+{
+	int	nlinks;
+
+	nlinks = 0;
+	while (path)
+	{
+		ft_printf("PATH index is %d\n", nlinks++);
+		print_room(d->all[path->room], d);
+		ft_printf("going to next index\n");
+		path = path->n;
+	}
+}
 
 void	print_room(t_l_rooms *room, t_l_data *d)
 {
@@ -21,22 +35,21 @@ void	print_room(t_l_rooms *room, t_l_data *d)
 		ft_printf("this room is NULL\n");
 		return ;
 	}
-	printf("room name is [%s%s%s]\n", GREEN, room->name, RESET);
-	printf("room has %s%d%s links\n",CYAN, room->lindexes[0], RESET);
-	printf("room used flag is %s%d%s links\n",CYAN, room->used, RESET);
+	ft_printf("name[%s%s%s] ", GREEN, room->name, RESET);
+	ft_printf("links[%s%d%s] ",CYAN, room->lindexes[0], RESET);
+	ft_printf("used[%s%d%s] ",CYAN, room->used, RESET);
 	if (room->startend == 1)
-		ft_printf("%sRoom is START%s\n", GREEN, RESET);
+		ft_printf("%s[START] %s", GREEN, RESET);
 	else if (room->startend == 2)
-		ft_printf("%sRoom is END%s\n", RED, RESET);
-	else
-		ft_printf("room is not start or end\n");
-	ft_printf("room depth is %s%d%s\n", MAGENTA, room->depth, RESET);
-	ft_printf("room links are below\n");
+		ft_printf("%s[ END ] %s", RED, RESET);
+	ft_printf("depth[%s%d%s] ", MAGENTA, room->depth, RESET);
+	ft_printf("links are below\n");
 	i = 0;
 	while (i++ < room->lindexes[0])
 	{
 		ft_printf("Link %s%s%s",GREEN, d->all[room->lindexes[i]]->name, RESET);
-	ft_printf(" depth = %s%d%s\n", MAGENTA, d->all[room->lindexes[i]]->depth, RESET);
+	ft_printf(" depth = %s%d%s used ", MAGENTA, d->all[room->lindexes[i]]->depth, RESET);
+	ft_printf("%s%d%s\n",CYAN, d->all[room->lindexes[i]]->used, RESET);
 	}
 	ft_putchar('\n');
 }

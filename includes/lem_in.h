@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 15:16:32 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/14 20:31:49 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/15 19:08:21 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct	s_l_p
 {
 	int	room;
 	struct s_l_p	*n;
+	struct s_l_p	*p;
 }				t_l_p;
 
 typedef struct			s_l_ants
@@ -97,9 +98,12 @@ typedef struct		s_l_data
 	t_l_rooms		*r1;
 	t_l_rooms		*r2;
 	t_s_list		*lines;
+	t_l_p			**paths;
 }					t_l_data;
 
-void	resolve(t_l_data *d, t_l_rooms **all, int *allindex);
+void	print_path(t_l_p *path, t_l_data *d);
+t_l_p	*add_room_to_path(t_l_p *current, int room);
+void	resolve(t_l_rooms *start, t_l_data *d);
 void	print_room(t_l_rooms *room, t_l_data *d);
 void	remove_noconnects(t_l_rooms *start, t_l_data *d);
 void	set_depth(t_l_rooms **all, t_l_data *d);

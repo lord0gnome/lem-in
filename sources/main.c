@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 15:18:58 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/14 20:31:49 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/15 19:08:21 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,9 @@ int	main(int argc, char **argv)
 	//flip_allindex(data->allindex);
 	megatest(data);
 	ft_printf("number of rooms is [%d]\n", data->nrooms);
-	resolve(data, data->all, data->allindex);
+	while (data->frst->startend != 1)
+		data->frst = data->frst->next;
+	resolve(data->frst, data);
 /*	while (number < data->nrooms)
 	{
 		ft_printf("Room is [%s] with values below\nstartend :	%d\ndepth :		%d\nx/y :		%d / %d\n", data->all[number]->name, data->all[number]->startend, data->all[number]->depth, data->all[number]->x, data->all[number]->y);
