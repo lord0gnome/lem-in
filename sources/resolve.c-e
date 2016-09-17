@@ -6,11 +6,37 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/14 14:32:14 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/17 21:34:29 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/17 20:11:39 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem_in.h"
+
+static int		glur(t_l_rooms *room, t_l_rooms **all, t_l_data *d)
+{
+	int	i;
+	int	depth;
+	int	lowestdindex;
+
+	lowestdindex = -1;
+	depth = -1;
+	i = 0;
+	d->i = 0;
+	while (i++ < room->lindexes[0])
+	{
+		if (depth == -1 && all[room->lindexes[i]]->used == 0)
+		{
+			depth = all[room->lindexes[i]]->depth;
+			lowestdindex = room->lindexes[i];
+		}
+		if (all[room->lindexes[i]]->depth < depth && !all[room->lindexes[i]]->used)
+		{
+			depth = all[room->lindexes[i]]->depth;
+			lowestdindex = room->lindexes[i];
+		}
+	}
+	return (lowestdindex);
+}
 
 static int		novalidpath(t_l_p *path, t_l_data *d)
 {
@@ -21,8 +47,7 @@ static int		novalidpath(t_l_p *path, t_l_data *d)
 	i = 0;
 	while (i++ < current->lindexes[0])
 	{
-		if (!d->all[current->lindexes[i]]->used ||
-			d->all[current->lindexes[i]]->startend == 2)
+		if (!d->all[current->lindexes[i]]->used || d->all[current->lindexes[i]]->startend == 2)
 			return (0);
 	}
 	return (1);
@@ -36,7 +61,9 @@ t_l_p			*backtrack(t_l_p *path, t_l_data *d)
 	if (path && path->p)
 		path = path->p;
 	if (path && path->n)
+	{
 		free(path->n);
+	}
 	path->n = NULL;
 	return (path);
 }
@@ -58,28 +85,6 @@ static int		get_most_potential_paths(t_l_rooms **rooms)
 	return (ret);
 }
 
-static void		res_loop(t_l_data *d, t_l_rooms **a, t_l_p *t, t_l_rooms *s)
-{
-	while (42)
-	{
-		if (s->startend == 2)
-			break ;
-		d->paths[d->i2] = add_room_to_path(d->paths[d->i2], glur(s, d->all, d));
-		t = d->paths[d->i2];
-		while (t->n)
-			t = t->n;
-		if (a[t->room]->startend == 2)
-			break ;
-		while (novalidpath(t, d))
-			t = backtrack(d->paths[d->i2], d);
-		if (s->startend == 1)
-			s->used = 1;
-		if (a[t->room]->startend != 2)
-			a[t->room]->used = 1;
-		s = a[t->room];
-	}
-}
-
 void			resolve(t_l_rooms *start, t_l_data *d)
 {
 	int	p;
@@ -91,20 +96,42 @@ void			resolve(t_l_rooms *start, t_l_data *d)
 	sbck = start;
 	a = d->all;
 	p = get_most_potential_paths(d->all);
-	d->paths = (t_l_p**)malloc(sizeof(t_l_p*) * (p + 1));
+	d->paths = (t_l_p**)malloc(sizeof(t_l_p*) * (p + 1));	
 	d->paths[p] = NULL;
 	startint = 0;
 	while (a[startint]->startend != 1)
 		startint++;
 	d->i2 = 0;
-	travel = NULL;
 	while (d->i2 < p)
 	{
 		d->paths[d->i2] = NULL;
 		start = sbck;
 		start->used = 0;
 		d->paths[d->i2] = add_room_to_path(d->paths[d->i2], startint);
-		res_loop(d, a, travel, start);
+		while (42)
+		{
+			/*
+			 * find lowest depth room with no used flag, and set flag to used
+			 * while moving start to this room, until end is found. Repeat as
+			 * many times as possible
+			 */
+			if (start->startend == 2)
+				break ;
+			d->paths[d->i2] = add_room_to_path(d->paths[d->i2], glur(start, d->all, d));
+			travel = d->paths[d->i2];
+			while (travel->n)
+				travel = travel->n;
+			if (a[travel->room]->startend == 2)
+				break ;
+			while (novalidpath(travel, d))
+				travel = backtrack(d->paths[d->i2], d);
+			if (start->startend == 1)
+				start->used = 1;
+			if (a[travel->room]->startend != 2)
+				a[travel->room]->used = 1;
+			start = a[travel->room];
+		}
+		//	print_path(d->paths[d->i2], d);
 		d->i2++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/04 14:06:43 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/14 19:44:26 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/17 20:54:16 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,15 @@ t_l_rooms	*create_rooms(t_l_data *d, char *name)
 	return (new);
 }
 
+static void	set_room_data(t_l_rooms *new)
+{
+	new->next = NULL;
+	new->links = NULL;
+	new->larray = NULL;
+	new->lindexes = NULL;
+	new->used = 0;
+}
+
 int			add_room(t_l_data *d, char *name)
 {
 	t_l_rooms	*new;
@@ -45,11 +54,7 @@ int			add_room(t_l_data *d, char *name)
 			first = first->next;
 		if ((new = (t_l_rooms *)malloc(sizeof(t_l_rooms))) == NULL)
 			return (0);
-		new->next = NULL;
-		new->links = NULL;
-		new->larray = NULL;
-		new->lindexes = NULL;
-		new->used = 0;
+		set_room_data(new);
 		new->larray_len = 0;
 		new->x = d->cx;
 		new->y = d->cy;

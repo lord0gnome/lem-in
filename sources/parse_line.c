@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/04 14:46:01 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/08 16:36:45 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/17 18:41:47 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	is_room(char *str, t_l_data *d)
 	return (0);
 }
 
-int	is_command(char *str, t_l_data *d)
+int	is_command(char *str)
 {
 	int	i;
 
@@ -52,9 +52,9 @@ int	is_command(char *str, t_l_data *d)
 	if (str[i] == '#' && str[i + 1] && str[i + 1] && str[i + 1] == '#')
 	{
 		if (!ft_strcmp("start", str + 2))
-			return (d->command = START);
+			return (START);
 		else if (!ft_strcmp("end", str + 2))
-			return (d->command = END);
+			return (END);
 		else
 			return (0);
 	}
@@ -106,7 +106,7 @@ int	init_all(t_l_data *d)
 			else
 				return (d->err->errno);
 		}
-		else if (travel->flag == 4 && (tmp = is_command(travel->str, d)))
+		else if (travel->flag == 4 && (tmp = is_command(travel->str)))
 			d->command = tmp;
 		else if (travel->flag == 3 && (!is_link(travel->str, d)))
 			add_link(d->r1, d->r2, d);
@@ -134,8 +134,8 @@ int	parse_line(t_l_data *d)
 		tmp = 0;
 		if (travel->flag && d->nants == -1 && is_ants(travel->str))
 			travel->flag = 5;
-		else if (travel->flag && (tmp = is_command(travel->str, d)))
-			travel->flag = d->command = 0 ? 4 : 4;
+		else if (travel->flag && (tmp = is_command(travel->str)))
+			travel->flag = tmp == 1 || tmp == 2 ? 4 : 0;
 		else if (travel->flag && (!is_link(travel->str, d) ||
 				(ft_findfirstlastdelim(travel->str, '-', 0) != -1)))
 			travel->flag = 3;

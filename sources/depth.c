@@ -6,30 +6,37 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/10 14:19:13 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/14 18:52:46 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/17 20:44:23 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem_in.h"
 
-void	set_depth(t_l_rooms **all, t_l_data *d)
+static int	*init_ind_tab(t_l_data *d, int *irooms, int *ir2)
 {
-	int	irooms;
-	int ilinks;
-	int	ir2;
 	int	*indexes;
-	t_l_rooms *current;
+	int	i;
 
+	i = 0;
+	indexes = (int *)malloc(sizeof(int) * (d->nrooms + 1));
+	while (++i < d->nrooms)
+		indexes[i] = -1;
+	indexes[i] = -2;
+	*irooms = -1;
+	*ir2 = 0;
+	return (indexes);
+}
 
-	irooms = 0;
-	indexes = (int *)malloc(sizeof(int) * d->nrooms + 1);
-	indexes[0] = 0;
-	while (++irooms < d->nrooms)
-		indexes[irooms] = -1;
-	indexes[irooms] = -2;
-	irooms = 0;
-	ir2 = 0;
-	while (indexes[irooms] != -2 && indexes[irooms] != -1)
+void		set_depth(t_l_rooms **all, t_l_data *d)
+{
+	int			irooms;
+	int			ilinks;
+	int			ir2;
+	int			*indexes;
+	t_l_rooms	*current;
+
+	indexes = init_ind_tab(d, &irooms, &ir2);
+	while (indexes[++irooms] != -2 && indexes[irooms] != -1)
 	{
 		current = all[indexes[irooms]];
 		if (current->depth == -1)
@@ -44,7 +51,6 @@ void	set_depth(t_l_rooms **all, t_l_data *d)
 				all[current->lindexes[ilinks]]->depth = current->depth + 1;
 			}
 		}
-		irooms++;
 	}
 	d->allindex = indexes;
 }

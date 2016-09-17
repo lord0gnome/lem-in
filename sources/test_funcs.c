@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/01 13:47:55 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/15 19:08:21 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/17 21:09:14 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ void	print_room(t_l_rooms *room, t_l_data *d)
 	while (i++ < room->lindexes[0])
 	{
 		ft_printf("Link %s%s%s",GREEN, d->all[room->lindexes[i]]->name, RESET);
-	ft_printf(" depth = %s%d%s used ", MAGENTA, d->all[room->lindexes[i]]->depth, RESET);
-	ft_printf("%s%d%s\n",CYAN, d->all[room->lindexes[i]]->used, RESET);
+		ft_printf(" depth = %s%d%s used ", MAGENTA, d->all[room->lindexes[i]]->depth, RESET);
+		ft_printf("%s%d%s\n",CYAN, d->all[room->lindexes[i]]->used, RESET);
 	}
 	ft_putchar('\n');
 }

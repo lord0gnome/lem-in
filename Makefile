@@ -6,13 +6,13 @@
 #    By: guiricha <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/26 16:55:06 by guiricha          #+#    #+#              #
-#    Updated: 2016/09/15 16:30:34 by guiricha         ###   ########.fr        #
+#    Updated: 2016/09/17 21:35:11 by guiricha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRC_NAME = main.c parse_args.c init.c ants.c rooms.c parse_line.c \
 		   links.c order_commands.c test_funcs.c convert_to_tab.c \
-		   init_room_tab.c megatest.c depth.c resolve.c paths.c
+		   init_room_tab.c megatest.c depth.c resolve.c paths.c glur.c
 NAME = lem-in
 SRC_DIR = ./sources/
 SRC_NDIR=$(addprefix $(SRC_DIR), $(SRC_NAME))

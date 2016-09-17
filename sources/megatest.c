@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/10 13:32:03 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/14 18:41:52 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/17 20:54:52 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,10 @@
 void	megatest(t_l_data *d)
 {
 	int			*nrooms;
-	int			tmpli;
 	int			li;
 	t_l_rooms	**a;
 
 	a = d->all;
-	tmpli = d->nrooms;
 	nrooms = d->allindex;
 
 	while (*nrooms != -2)
@@ -51,5 +49,5 @@ void	megatest(t_l_data *d)
 		ft_putchar('\n');
 		nrooms++;
 	}
-	ft_printf("bleh\n");
+	ft_printf("%sEND OF MEGATEST%s\n", BLUE, RESET);
 }
