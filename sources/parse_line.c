@@ -6,13 +6,13 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/04 14:46:01 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/17 18:41:47 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/19 13:02:58 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int	is_ants(char *str)
+int			is_ants(char *str)
 {
 	int	i;
 
@@ -26,7 +26,7 @@ int	is_ants(char *str)
 	return (0);
 }
 
-int	is_room(char *str, t_l_data *d)
+int			is_room(char *str, t_l_data *d)
 {
 	d->i2 = 0;
 	while (str[d->i2] && str[d->i2] != ' ')
@@ -44,7 +44,7 @@ int	is_room(char *str, t_l_data *d)
 	return (0);
 }
 
-int	is_command(char *str)
+int			is_command(char *str)
 {
 	int	i;
 
@@ -61,7 +61,7 @@ int	is_command(char *str)
 	return (0);
 }
 
-int	is_link(char *link, t_l_data *d)
+int			is_link(char *link, t_l_data *d)
 {
 	t_l_rooms	*trav;
 
@@ -86,50 +86,13 @@ int	is_link(char *link, t_l_data *d)
 	return (1);
 }
 
-int	init_all(t_l_data *d)
-{
-	t_s_list	*travel;
-	int			tmp;
-	int			flag;
-
-	flag = 2;
-	travel = d->lines;
-	while (travel && (travel->flag != -1 || d->ignoreerr))
-	{
-		tmp = 0;
-		if (travel->flag == 2 && flag == 3)
-			return (d->err->errno = 131);
-		if (travel->flag == 5)
-		{
-			if (!test_ants_first(travel, d->err))
-				d->nants = ft_atoi(travel->str);
-			else
-				return (d->err->errno);
-		}
-		else if (travel->flag == 4 && (tmp = is_command(travel->str)))
-			d->command = tmp;
-		else if (travel->flag == 3 && (!is_link(travel->str, d)))
-			add_link(d->r1, d->r2, d);
-		else if (travel->flag == 2 && !is_room(travel->str, d))
-		{
-			if (!(add_room(d, ft_strgrab(travel->str, ' '))))
-				d->err->errno = 103;
-		}
-		if (d->err->errno && !d->ignoreerr)
-			return (0);
-		flag = travel->flag == 3 ? 3 : 2;
-		travel = travel->next;
-	}
-	return (1);
-}
-
-int	parse_line(t_l_data *d)
+int			parse_line(t_l_data *d)
 {
 	t_s_list	*travel;
 	int			tmp;
 
 	travel = d->lines;
-	while (travel && (travel->flag != -1 || d->ignoreerr))
+	while (travel && (travel->flag != -1))
 	{
 		tmp = 0;
 		if (travel->flag && d->nants == -1 && is_ants(travel->str))
@@ -137,7 +100,7 @@ int	parse_line(t_l_data *d)
 		else if (travel->flag && (tmp = is_command(travel->str)))
 			travel->flag = tmp == 1 || tmp == 2 ? 4 : 0;
 		else if (travel->flag && (!is_link(travel->str, d) ||
-				(ft_findfirstlastdelim(travel->str, '-', 0) != -1)))
+					(ft_findfirstlastdelim(travel->str, '-', 0) != -1)))
 			travel->flag = 3;
 		else if (travel->flag && !is_room(travel->str, d))
 			travel->flag = 2;

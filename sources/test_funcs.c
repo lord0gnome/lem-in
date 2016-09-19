@@ -6,13 +6,13 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/01 13:47:55 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/17 21:09:14 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/19 13:11:07 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem_in.h"
 
-void	print_path(t_l_p *path, t_l_data *d)
+void		print_path(t_l_p *path, t_l_data *d)
 {
 	int	nlinks;
 
@@ -26,7 +26,7 @@ void	print_path(t_l_p *path, t_l_data *d)
 	}
 }
 
-void	print_room(t_l_rooms *room, t_l_data *d)
+void		print_room(t_l_rooms *room, t_l_data *d)
 {
 	int	i;
 
@@ -36,8 +36,8 @@ void	print_room(t_l_rooms *room, t_l_data *d)
 		return ;
 	}
 	ft_printf("name[%s%s%s] ", GREEN, room->name, RESET);
-	ft_printf("links[%s%d%s] ",CYAN, room->lindexes[0], RESET);
-	ft_printf("used[%s%d%s] ",CYAN, room->used, RESET);
+	ft_printf("links[%s%d%s] ", CYAN, room->lindexes[0], RESET);
+	ft_printf("used[%s%d%s] ", CYAN, room->used, RESET);
 	if (room->startend == 1)
 		ft_printf("%s[START] %s", GREEN, RESET);
 	else if (room->startend == 2)
@@ -47,47 +47,15 @@ void	print_room(t_l_rooms *room, t_l_data *d)
 	i = 0;
 	while (i++ < room->lindexes[0])
 	{
-		ft_printf("Link %s%s%s",GREEN, d->all[room->lindexes[i]]->name, RESET);
-		ft_printf(" depth = %s%d%s used ", MAGENTA, d->all[room->lindexes[i]]->depth, RESET);
-		ft_printf("%s%d%s\n",CYAN, d->all[room->lindexes[i]]->used, RESET);
+		ft_printf("Link %s%s%s", GREEN, d->all[room->lindexes[i]]->name, RESET);
+		ft_printf(" depth = %s%d%s used ", MAGENTA,
+		d->all[room->lindexes[i]]->depth, RESET);
+		ft_printf("%s%d%s\n", CYAN, d->all[room->lindexes[i]]->used, RESET);
 	}
 	ft_putchar('\n');
 }
 
-void	remove_noconnects(t_l_rooms *start, t_l_data *d)
-{
-	t_l_rooms *previous;
-	t_l_rooms *tofree;
-
-	previous = NULL;
-	while (start)
-	{
-		tofree = NULL;
-		if (start->links == NULL)
-		{
-			d->nrooms--;
-			ft_printf("room %s has no links, it is useless\n", start->name);
-			if (previous)
-				previous->next = start->next;
-			else
-			{
-				d->frst = start->next;
-				d->rooms = start->next;
-			}
-			tofree = start;
-		}
-		previous = start;
-		start = start->next;
-		if (tofree)
-		{
-			free(tofree);
-			tofree = NULL;
-			previous = NULL;
-		}
-	}
-}
-
-int	count_rooms(t_l_rooms *first)
+int			count_rooms(t_l_rooms *first)
 {
 	int	ret;
 
@@ -100,7 +68,7 @@ int	count_rooms(t_l_rooms *first)
 	return (ret);
 }
 
-int	test_ants_first(t_s_list *antsline, t_l_error *err)
+int			test_ants_first(t_s_list *antsline, t_l_error *err)
 {
 	antsline = antsline->prev;
 	while (antsline)
@@ -112,7 +80,7 @@ int	test_ants_first(t_s_list *antsline, t_l_error *err)
 	return (0);
 }
 
-int	test_strt_end(t_l_rooms *travel, t_l_error *err)
+int			test_strt_end(t_l_rooms *travel, t_l_error *err)
 {
 	char	start;
 	char	end;

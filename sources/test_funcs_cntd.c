@@ -1,34 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   paths.c                                            :+:      :+:    :+:   */
+/*   test_funcs_cntd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/09/15 15:57:15 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/19 13:12:09 by guiricha         ###   ########.fr       */
+/*   Created: 2016/09/19 12:42:28 by guiricha          #+#    #+#             */
+/*   Updated: 2016/09/19 12:49:46 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem_in.h"
 
-t_l_p	*add_room_to_path(t_l_p *current, int room)
+void	remove_noconnects(t_l_rooms *start, t_l_data *d)
 {
-	t_l_p	*new;
-	t_l_p	*strt;
+	t_l_rooms *previous;
+	t_l_rooms *tofree;
 
-	strt = current;
-	new = (t_l_p *)malloc(sizeof(t_l_p));
-	while (current && current->n)
-		current = current->n;
-	new->n = NULL;
-	new->p = NULL;
-	new->room = room;
-	if (current)
+	previous = NULL;
+	while (start)
 	{
-		current->n = new;
-		new->p = current;
-		return (strt);
+		tofree = NULL;
+		if (start->links == NULL && (d->nrooms--) != -42)
+		{
+			if (previous)
+				previous->next = start->next;
+			else if (start == d->frst)
+				d->rooms = start->next;
+			tofree = start;
+		}
+		previous = start;
+		start = start->next;
+		if (tofree)
+		{
+			free(tofree);
+			previous = NULL;
+		}
 	}
-	return (new);
 }
