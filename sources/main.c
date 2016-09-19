@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 15:18:58 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/19 13:37:42 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/19 14:59:55 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@ static int	main_cntd(t_l_data *data)
 	data->i2 = 0;
 	resolve(data->frst, data);
 	data->i2 = 0;
-	while (data->paths[data->i2])
-		print_path(data->paths[data->i2++], data);
+	make_ants_go(data, data->paths, data->ants);
 	return (1);
 }
 
