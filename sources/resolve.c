@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/14 14:32:14 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/19 12:42:13 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/20 14:31:31 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ void			resolve(t_l_rooms *start, t_l_data *d)
 		d->paths[d->i2] = add_room_to_path(d->paths[d->i2], startint);
 		if ((d->i = res_loop(d, a, travel, start)) == 0)
 			break ;
+		print_path(d->paths[d->i2], d);
 		d->i2++;
 	}
 }

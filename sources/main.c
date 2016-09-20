@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 15:18:58 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/20 11:45:32 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/20 13:43:07 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	main_cntd(t_l_data *data)
 	set_lindexes_for_room(data->all, data);
 	set_depth(data->all, data);
 	p_a_st(data->ants, data->all, data->allindex);
-	//megates(data);
+	megatest(data);
 	while (data->frst->startend != 1)
 		data->frst = data->frst->next;
 	data->i2 = 0;
@@ -52,8 +52,6 @@ int			main(int argc, char **argv)
 		return (ft_printf("ERROR : Read a directory / Other read error"));
 	ft_printf("seg after argparse?\n");
 	parse_line(data);
-	if (data->err->errno)
-		return(0);
 	if (data->repairorder)
 		test_order(data);
 	init_all(data);

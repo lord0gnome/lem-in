@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/28 15:59:15 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/20 11:43:52 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/20 17:13:07 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,16 @@
 
 void	test_p_table(int **table, t_l_rooms **all)
 {
+	int	i;
+
 	while (*table)
 	{
-		while (**table != -2)
+		i = 0;
+		while ((*table)[i] != -2)
 		{
-			ft_printf("room at this index is %s\n", all[**table]->name);
-			*table = *table + 1;
+			ft_printf("room at this index is %s\n", all[(*table)[i]]->name);
+			ft_putnbr(i);
+			i++;
 		}
 		ft_printf("bing\n");
 		table++;
@@ -66,32 +70,48 @@ static void	make_p_table(t_l_p **path, t_l_data *d, int *tlen)
 	}
 }
 
-static int	has_ant(int room, int *ants)
-{
-	while (*ants != -2)
-	{
-		if (room == *ants)
-			return (1);
-		ants++;
-	}
-	return (0);
-}
-
-int	move_ant(int ant ,int *path, int *ants)
+int	move_ant(int ant ,int *path)
 {
 	while ((*path) != -2)
 	{
 		if (*path == ant && *(path + 1) != -2)
 		{
 			path++;
-			if (!has_ant(*(path), ants))
 				return (*path);
-			else
-				break ;
 		}
 		path++;
 	}
 	return (ant);
+}
+
+static int	t_len(int **paths)
+{
+	return (**paths);
+}
+
+static int	det_paths(int **paths, int *ants, t_l_data *d)
+{
+	int	*tabs;
+	int index;
+	int	nants;
+
+	*ants = 0;
+	tabs = (int *)malloc(sizeof(int) * t_len(paths) + 1);
+	tabs[t_len(paths)] = -1;
+	index = 0;
+	while (index < t_len(paths))
+		tabs[index++] = 0;
+	index = 0;
+	nants = d->nants;
+	while (nants)
+	{
+		nants--;
+	}
+
+
+
+
+	return (0);
 }
 
 void	make_ants_go(t_l_data *d, t_l_p **p, int *ants)
@@ -105,27 +125,30 @@ void	make_ants_go(t_l_data *d, t_l_p **p, int *ants)
 	tantsout = 0;
 	make_p_table(p, d, &tlen);
 	path = 0;
+	test_p_table(d->pints, d->all);
+	det_paths(d->pints, ants, d);
 	while (42)
 	{
 		i = 0;
-		tantsout += tlen;
+		tantsout += 4;
 		while (ants[i] != -2 && i < tantsout)
 		{
-			while (ants[i] == -3 && ants[i] != -2)
+			while (ants[i] == -3)
 				i++;
 			if (ants[i] == -2)
 				return;
-			path = d->pints[path] == NULL ? 0 : path;
-			ft_printf("L%d-", i + 1);
-			ants[i] = move_ant(ants[i], d->pints[path], ants);
-			ft_printf("%s ", d->all[ants[i]]->name);
-	//		ft_wait(1);
+			path = 0;
 			if (d->all[ants[i]]->startend == 2)
 				ants[i] = -3;
-			path++;
+			if (ants[i] != -3)
+			{
+				ft_printf("L%d-", i + 1);
+				ants[i] = move_ant(ants[i], d->pints[path]);
+				ft_printf("%s ", d->all[ants[i]]->name);
+			}
 			i++;
 		}
-			ft_putchar('\n');
+		ft_putchar('\n');
 	}
 }
 
