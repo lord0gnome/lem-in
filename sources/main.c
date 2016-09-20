@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 15:18:58 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/19 14:59:55 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/20 11:45:32 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,14 @@ static int	main_cntd(t_l_data *data)
 	test_strt_end(data->rooms, data->err);
 	ft_print_members(data->lines);
 	make_ants(data);
+	data->frst = data->rooms;
 	remove_noconnects(data->frst, data);
 	data->frst = data->rooms;
 	init_room_tab(data, data->frst);
 	set_lindexes_for_room(data->all, data);
 	set_depth(data->all, data);
 	p_a_st(data->ants, data->all, data->allindex);
-	megatest(data);
+	//megates(data);
 	while (data->frst->startend != 1)
 		data->frst = data->frst->next;
 	data->i2 = 0;

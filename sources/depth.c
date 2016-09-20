@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/10 14:19:13 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/19 11:29:18 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/20 11:44:13 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static int	*init_ind_tab(t_l_data *d, int *irooms, int *ir2)
 	while (++i < d->nrooms)
 		indexes[i] = -1;
 	indexes[i] = -2;
+	indexes[0] = 0;
 	*irooms = -1;
 	*ir2 = 0;
 	return (indexes);
@@ -36,6 +37,7 @@ void		set_depth(t_l_rooms **all, t_l_data *d)
 	t_l_rooms	*current;
 
 	indexes = init_ind_tab(d, &irooms, &ir2);
+	//ft_printf("starting depth setting\n");
 	while (indexes[++irooms] != -2 && indexes[irooms] != -1)
 	{
 		current = all[indexes[irooms]];
@@ -52,5 +54,6 @@ void		set_depth(t_l_rooms **all, t_l_data *d)
 			}
 		}
 	}
+	//ft_print("finished setting depth\n");
 	d->allindex = indexes;
 }

@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/28 15:59:15 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/19 17:31:02 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/20 11:43:52 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void	make_ants_go(t_l_data *d, t_l_p **p, int *ants)
 			ft_printf("L%d-", i + 1);
 			ants[i] = move_ant(ants[i], d->pints[path], ants);
 			ft_printf("%s ", d->all[ants[i]]->name);
-			ft_wait(50);
+	//		ft_wait(1);
 			if (d->all[ants[i]]->startend == 2)
 				ants[i] = -3;
 			path++;
