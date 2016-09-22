@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/28 15:59:15 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/22 17:45:03 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/22 19:26:04 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,31 +102,47 @@ void	make_do(int *ants, int nants, int *antpaths, t_l_rooms **all)
 		pindex = 0;
 		if (ants[i] != -3 && all[ants[i]]->startend != 1)
 		{
-	//	move_ants(ants);
-	//	print_ants(ants);
 		}
+	}
+}
+
+void	convert_ants_to_neg_indexes(int *ants, int *paths)
+{
+	int counter;
+	int	i;
+
+	i = 0;	
+	while (*paths != -1)
+	{
+		counter = -(*paths);
+		while (counter < 0)
+		{
+		//	ft_printf("ant number %d is now = to %d\n", i + 1, counter);
+			ants[i++] = counter++;	
+		}
+		paths++;
 	}
 }
 
 void	convert_ants_to_paths(int *paths, int *ants)
 {
-int	i;
-int	pin;
+	int	i;
+	int	pin;
 
-i = 0;
-pin = 0;
+	i = 0;
+	pin = 0;
 	while (ants[i] != -2)
 	{
 		pin = paths[pin] == -1 ? 0 : pin;
 		while (paths[pin] != -1)
 		{
-			//ft_printf("paths[pin] value is %d\n", paths[pin]);
+			ft_printf("paths[pin] value is %d\n", paths[pin]);
 			if (paths[pin])
 			{
 				ants[i] = pin;
 				ft_printf("setting ant number %d to %dst path\n", i + 1, pin);
 				paths[pin]--;
-		i++;
+				i++;
 				pin++;
 				break;
 			}
@@ -138,12 +154,13 @@ pin = 0;
 void	make_ants_go(t_l_data *d, t_l_p **p, int *ants)
 {
 	int	i;
+	int	increm;
 	int	path;
 	int	tantsout;
 	int	tlen;
 	int	*paths;
 	int npaths;
-	int stepindex;
+	int n;
 
 	tlen = 0;
 	tantsout = 0;
@@ -153,10 +170,27 @@ void	make_ants_go(t_l_data *d, t_l_p **p, int *ants)
 	npaths = 0;
 	while (paths[npaths] != -1)
 		npaths++;
-	convert_ants_to_paths(paths,ants);
+	convert_ants_to_neg_indexes(ants, paths);
+//	convert_ants_to_paths(paths,ants);
 	i = 0;
+	increm = 0;
+	while (42)
+	{
+		n = 0;
+		i = 0;
+		while (ants[i] >= 0 && ants[i] < d->pints[n][0])
+		{
+			ft_printf("ant number is %d and room is %s\n", ants[i], d->all[d->pints[0][i]]->name);
+			ft_wait(10);
+			i++;
+		}
+		while (i < d->nants)
+		{
+			ants[i++]++;
+		}
+		i = 0;
+	}
 	path = 0;
-	stepindex = 0;
 
 }
 
