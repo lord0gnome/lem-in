@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 15:18:58 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/20 13:43:07 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/22 17:45:03 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <unistd.h>
+#include <time.h>
 
 static int	main_cntd(t_l_data *data)
 {
@@ -32,9 +33,11 @@ static int	main_cntd(t_l_data *data)
 	while (data->frst->startend != 1)
 		data->frst = data->frst->next;
 	data->i2 = 0;
+	double		tt = (double)clock() / CLOCKS_PER_SEC;
 	resolve(data->frst, data);
 	data->i2 = 0;
 	make_ants_go(data, data->paths, data->ants);
+	ft_printf("\nResolution time : %d\n", (int)(((double)clock() / CLOCKS_PER_SEC - tt) * 1000000));
 	return (1);
 }
 

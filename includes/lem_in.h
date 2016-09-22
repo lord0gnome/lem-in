@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 15:16:32 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/20 17:00:38 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/22 17:45:03 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ typedef struct				s_l_data
 	t_l_p					**paths;
 }							t_l_data;
 
+void						print_path_ant_distribution(int *path_ants);
+int							*det_paths(int nant, int **paths);
 void						make_ants_go(t_l_data *d, t_l_p **p, int *ants);
 int							r_ncse(t_l_rooms **all, int *allindex, t_l_data *d);
 int							glur(t_l_rooms *room, t_l_rooms **all, t_l_data *d);

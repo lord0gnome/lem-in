@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/28 15:59:15 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/20 17:13:07 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/22 17:45:03 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,10 @@ static void	make_p_table(t_l_p **path, t_l_data *d, int *tlen)
 	{
 		d->i = 0;
 		trav = path[d->i2];
-		d->pints[d->i2] = (int *)malloc(sizeof(int) * (p_len(trav) + 1));
-		d->pints[d->i2][p_len(trav)] = -2;
+		d->pints[d->i2] = (int *)malloc(sizeof(int) * (p_len(trav) + 2));
+		d->pints[d->i2][p_len(trav) + 1] = -2;
+		d->pints[d->i2][d->i++] = p_len(trav) - 2;
+		ft_putnbr(d->pints[d->i2][0]);
 		while (trav)
 		{
 			d->pints[d->i2][d->i] = trav->room;
@@ -77,41 +79,60 @@ int	move_ant(int ant ,int *path)
 		if (*path == ant && *(path + 1) != -2)
 		{
 			path++;
-				return (*path);
+			return (*path);
 		}
 		path++;
 	}
 	return (ant);
 }
 
-static int	t_len(int **paths)
+void	make_do(int *ants, int nants, int *antpaths, t_l_rooms **all)
 {
-	return (**paths);
+	int	i;
+	int	npaths;
+	int	pindex;
+
+	npaths = 0;
+	i = nants;
+	while (antpaths[npaths] != -1)
+		npaths++;
+	i = 0;
+	while (ants[i] != -2)
+	{
+		pindex = 0;
+		if (ants[i] != -3 && all[ants[i]]->startend != 1)
+		{
+	//	move_ants(ants);
+	//	print_ants(ants);
+		}
+	}
 }
 
-static int	det_paths(int **paths, int *ants, t_l_data *d)
+void	convert_ants_to_paths(int *paths, int *ants)
 {
-	int	*tabs;
-	int index;
-	int	nants;
+int	i;
+int	pin;
 
-	*ants = 0;
-	tabs = (int *)malloc(sizeof(int) * t_len(paths) + 1);
-	tabs[t_len(paths)] = -1;
-	index = 0;
-	while (index < t_len(paths))
-		tabs[index++] = 0;
-	index = 0;
-	nants = d->nants;
-	while (nants)
+i = 0;
+pin = 0;
+	while (ants[i] != -2)
 	{
-		nants--;
+		pin = paths[pin] == -1 ? 0 : pin;
+		while (paths[pin] != -1)
+		{
+			//ft_printf("paths[pin] value is %d\n", paths[pin]);
+			if (paths[pin])
+			{
+				ants[i] = pin;
+				ft_printf("setting ant number %d to %dst path\n", i + 1, pin);
+				paths[pin]--;
+		i++;
+				pin++;
+				break;
+			}
+			pin++;
+		}
 	}
-
-
-
-
-	return (0);
 }
 
 void	make_ants_go(t_l_data *d, t_l_p **p, int *ants)
@@ -120,36 +141,23 @@ void	make_ants_go(t_l_data *d, t_l_p **p, int *ants)
 	int	path;
 	int	tantsout;
 	int	tlen;
+	int	*paths;
+	int npaths;
+	int stepindex;
 
 	tlen = 0;
 	tantsout = 0;
 	make_p_table(p, d, &tlen);
+	//test_p_table(d->pints, d->all);
+	paths = det_paths(d->nants, d->pints);
+	npaths = 0;
+	while (paths[npaths] != -1)
+		npaths++;
+	convert_ants_to_paths(paths,ants);
+	i = 0;
 	path = 0;
-	test_p_table(d->pints, d->all);
-	det_paths(d->pints, ants, d);
-	while (42)
-	{
-		i = 0;
-		tantsout += 4;
-		while (ants[i] != -2 && i < tantsout)
-		{
-			while (ants[i] == -3)
-				i++;
-			if (ants[i] == -2)
-				return;
-			path = 0;
-			if (d->all[ants[i]]->startend == 2)
-				ants[i] = -3;
-			if (ants[i] != -3)
-			{
-				ft_printf("L%d-", i + 1);
-				ants[i] = move_ant(ants[i], d->pints[path]);
-				ft_printf("%s ", d->all[ants[i]]->name);
-			}
-			i++;
-		}
-		ft_putchar('\n');
-	}
+	stepindex = 0;
+
 }
 
 int		p_a_st(int *ants, t_l_rooms **all, int *allindex)
