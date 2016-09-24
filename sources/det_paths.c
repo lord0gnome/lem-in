@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/22 13:13:06 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/22 19:26:04 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/24 15:15:21 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ int	*det_paths(int nant, int **paths)
 		diff = 0;
 		if (paths[i + 1])
 			diff = ft_abs(paths[i][0] - paths[i + 1][0]);
-		ft_printf("the diff is currently %d\n", diff);
 		ibck = i;
 		i = 0;
 		while (i <= ibck && diff && nant)
@@ -90,6 +89,5 @@ int	*det_paths(int nant, int **paths)
 		nant--;
 		i++;
 	}
-	print_path_ant_distribution(ret);
 	return (ret);
 }

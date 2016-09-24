@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 15:18:58 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/22 19:26:04 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/24 16:23:58 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	main_cntd(t_l_data *data)
 	set_lindexes_for_room(data->all, data);
 	set_depth(data->all, data);
 	p_a_st(data->ants, data->all, data->allindex);
-	megatest(data);
+	//megatest(data);
 	while (data->frst->startend != 1)
 		data->frst = data->frst->next;
 	data->i2 = 0;
@@ -53,11 +53,15 @@ int			main(int argc, char **argv)
 		return (ft_printf("ERROR : %d, %s\n", err->errno, err->errstr));
 	if (read(data->fd, NULL, 0) < 0)
 		return (ft_printf("ERROR : Read a directory / Other read error"));
-	ft_printf("seg after argparse?\n");
+	ft_printf("arguments parse SUCCESS\n");
 	parse_line(data);
+	ft_printf("parse lines SUCCESS\n");
 	if (data->repairorder)
 		test_order(data);
 	init_all(data);
+	ft_printf("init all SUCCESS\n");
+	if (data->nants <= 0 || data->err->errno)
+		return (1);
 	data->nrooms = count_rooms(data->rooms);
 	data->frst = data->rooms;
 	main_cntd(data);

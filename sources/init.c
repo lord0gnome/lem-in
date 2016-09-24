@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:06:52 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/19 13:04:08 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/24 16:23:58 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void		init_l_data_more(t_l_data *d)
 	d->order = 0;
 	d->ignoreerr = 0;
 	d->repairorder = 0;
+	d->scone = 0;
+	d->first = 1;
 }
 
 t_l_data	*init_l_data(t_l_error *error)

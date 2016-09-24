@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/28 15:59:15 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/22 19:26:04 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/24 16:23:58 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	test_p_table(int **table, t_l_rooms **all)
 		while ((*table)[i] != -2)
 		{
 			ft_printf("room at this index is %s\n", all[(*table)[i]]->name);
-			ft_putnbr(i);
 			i++;
 		}
 		ft_printf("bing\n");
@@ -43,7 +42,7 @@ static int	p_len(t_l_p *p)
 	return (ret);
 }
 
-static void	make_p_table(t_l_p **path, t_l_data *d, int *tlen)
+static void	make_p_table(t_l_p **path, t_l_data *d)
 {
 	t_l_p *trav;
 
@@ -51,7 +50,6 @@ static void	make_p_table(t_l_p **path, t_l_data *d, int *tlen)
 	while (path[d->i2])
 		d->i2++;
 	d->pints = (int **)malloc(sizeof(int *) * d->i2 + 1);
-	*tlen = d->i2;
 	d->pints[d->i2] = NULL;
 	d->i2 = 0;
 	while (path[d->i2])
@@ -60,8 +58,7 @@ static void	make_p_table(t_l_p **path, t_l_data *d, int *tlen)
 		trav = path[d->i2];
 		d->pints[d->i2] = (int *)malloc(sizeof(int) * (p_len(trav) + 2));
 		d->pints[d->i2][p_len(trav) + 1] = -2;
-		d->pints[d->i2][d->i++] = p_len(trav) - 2;
-		ft_putnbr(d->pints[d->i2][0]);
+		d->pints[d->i2][d->i++] = p_len(trav);
 		while (trav)
 		{
 			d->pints[d->i2][d->i] = trav->room;
@@ -86,26 +83,6 @@ int	move_ant(int ant ,int *path)
 	return (ant);
 }
 
-void	make_do(int *ants, int nants, int *antpaths, t_l_rooms **all)
-{
-	int	i;
-	int	npaths;
-	int	pindex;
-
-	npaths = 0;
-	i = nants;
-	while (antpaths[npaths] != -1)
-		npaths++;
-	i = 0;
-	while (ants[i] != -2)
-	{
-		pindex = 0;
-		if (ants[i] != -3 && all[ants[i]]->startend != 1)
-		{
-		}
-	}
-}
-
 void	convert_ants_to_neg_indexes(int *ants, int *paths)
 {
 	int counter;
@@ -117,81 +94,139 @@ void	convert_ants_to_neg_indexes(int *ants, int *paths)
 		counter = -(*paths);
 		while (counter < 0)
 		{
-		//	ft_printf("ant number %d is now = to %d\n", i + 1, counter);
-			ants[i++] = counter++;	
+			ants[i++] = (counter++);	
 		}
 		paths++;
 	}
 }
 
-void	convert_ants_to_paths(int *paths, int *ants)
+int		get_i(int *paths, int pi)
+{
+	int ret;
+	int	m;
+
+	ret = 0;
+	m = 0;
+	while (paths[m] != -1 && m < pi)
+	{
+		ret += paths[m];
+		m++;
+	}
+	return (ret);
+}
+
+int	get_highest(int *ants, int nants, int phighest)
+{
+	int	highest;
+
+	highest = *ants;
+	while (nants--)
+	{
+		highest = highest < *ants && *ants <= phighest ? *ants : highest;
+		ants++;
+	}
+	return (highest);
+}
+
+int	*initantn(int *ants, int nants)
+{
+	int	n;
+	int	i;
+	int	highest;
+	int	hb;
+	int *antn;
+
+	n = 0;
+	i = 0;
+	antn = (int *)malloc(sizeof(int) * nants + 1);
+	antn[nants] = -1;
+	hb = ants[n];
+	while (ants[n])
+	{
+		hb = ants[n] > hb ? ants[n] : hb;
+		n++;
+	}
+	hb++;
+	n = 0;
+	highest = get_highest(ants, nants, hb);
+	while (n < nants)
+	{
+		i = 0;
+		while (i < nants)
+		{
+			if (ants[i] == highest)
+				antn[i] = ++n;
+			i++;
+		}
+		hb = highest - 1;
+		highest = get_highest(ants, nants, hb);
+	}
+	i = 0;
+	return (antn);
+}
+
+char	test_scone(int **pints)
 {
 	int	i;
-	int	pin;
 
 	i = 0;
-	pin = 0;
-	while (ants[i] != -2)
-	{
-		pin = paths[pin] == -1 ? 0 : pin;
-		while (paths[pin] != -1)
-		{
-			ft_printf("paths[pin] value is %d\n", paths[pin]);
-			if (paths[pin])
-			{
-				ants[i] = pin;
-				ft_printf("setting ant number %d to %dst path\n", i + 1, pin);
-				paths[pin]--;
-				i++;
-				pin++;
-				break;
-			}
-			pin++;
-		}
-	}
+	while (pints[i])
+		if (pints[i++][0] == 2)
+			return (1);
+	return (0);
 }
 
 void	make_ants_go(t_l_data *d, t_l_p **p, int *ants)
 {
 	int	i;
-	int	increm;
-	int	path;
-	int	tantsout;
-	int	tlen;
+	int	pi;
+	int	imax;
 	int	*paths;
-	int npaths;
-	int n;
+	int	*antn;
+	int	antput;
 
-	tlen = 0;
-	tantsout = 0;
-	make_p_table(p, d, &tlen);
-	//test_p_table(d->pints, d->all);
+	make_p_table(p, d);
 	paths = det_paths(d->nants, d->pints);
-	npaths = 0;
-	while (paths[npaths] != -1)
-		npaths++;
 	convert_ants_to_neg_indexes(ants, paths);
-//	convert_ants_to_paths(paths,ants);
+	antn = initantn(ants, d->nants);
 	i = 0;
-	increm = 0;
-	while (42)
+	d->scone = test_scone(d->pints);
+	antput = 0;
+	while (d->nants)
 	{
-		n = 0;
-		i = 0;
-		while (ants[i] >= 0 && ants[i] < d->pints[n][0])
+		pi = 0;
+			antput = 0;
+		while (paths[pi] != -1)
 		{
-			ft_printf("ant number is %d and room is %s\n", ants[i], d->all[d->pints[0][i]]->name);
-			ft_wait(10);
-			i++;
+			i = get_i(paths, pi);
+			imax = i + paths[pi];
+			while (i < imax)
+			{
+				if (ants[i] > 1 && ants[i] <= d->pints[pi][0])
+				{
+					if (!d->first && !d->scone)
+						ft_putchar(' ');
+					ft_printf("L%d-%s", antn[i], d->all[d->pints[pi][ants[i]]]->name);
+					antput = 1;
+				if (d->all[d->pints[pi][ants[i]]]->startend == 2)
+					d->nants--;
+				if (d->nants && d->scone)
+					ft_putchar(' ');
+					d->first = 0;
+				}
+				ants[i]++;
+				i++;
+			}
+			pi++;
 		}
-		while (i < d->nants)
-		{
-			ants[i++]++;
-		}
-		i = 0;
+		d->first = 1;
+		if (!d->nants)
+			return ;
+		if (!d->scone && antput)
+			ft_putchar('\n');
 	}
-	path = 0;
-
+	if (d->scone)
+		ft_putchar('\n');
 }
 
 int		p_a_st(int *ants, t_l_rooms **all, int *allindex)

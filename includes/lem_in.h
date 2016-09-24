@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 15:16:32 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/22 17:45:03 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/24 16:23:58 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ typedef struct				s_l_data
 	char					*l;
 	char					*newl;
 	char					load;
+	char					scone;
+	char					first;
 	int						nants;
 	int						nrooms;
 	int						i;
