@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 15:18:58 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/24 16:23:58 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/26 11:31:35 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,9 @@ static int	main_cntd(t_l_data *data)
 	double		tt = (double)clock() / CLOCKS_PER_SEC;
 	resolve(data->frst, data);
 	data->i2 = 0;
+	ft_putchar('\n');
 	make_ants_go(data, data->paths, data->ants);
-	ft_printf("\nResolution time : %d\n", (int)(((double)clock() / CLOCKS_PER_SEC - tt) * 1000000));
+	ft_printf("Resolution time : %d\n", (int)(((double)clock() / CLOCKS_PER_SEC - tt) * 1000000));
 	return (1);
 }
 

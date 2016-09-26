@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/28 15:59:15 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/24 16:23:58 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/26 11:28:56 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int		get_i(int *paths, int pi)
 	return (ret);
 }
 
-int	get_highest(int *ants, int nants, int phighest)
+static int	get_highest(int *ants, int nants, int phighest)
 {
 	int	highest;
 
@@ -126,6 +126,19 @@ int	get_highest(int *ants, int nants, int phighest)
 		ants++;
 	}
 	return (highest);
+}
+
+int	get_lowest(int *ants, int nants, int plowest)
+{
+	int lowest;
+
+	lowest = *ants;
+	while (nants--)
+	{
+		lowest = lowest > *ants && *ants >= plowest ? *ants : lowest;
+		ants++;
+	}
+	return (lowest);
 }
 
 int	*initantn(int *ants, int nants)
@@ -165,15 +178,37 @@ int	*initantn(int *ants, int nants)
 	return (antn);
 }
 
-char	test_scone(int **pints)
+char	test_scone(int **pints, int *lowest, int *ants, int nants)
 {
 	int	i;
 
 	i = 0;
+
+	*lowest = *ants;
+	while (nants--)
+	{
+		*lowest = *ants > *lowest ? *ants : *lowest;
+		ants++;
+	}
+	*lowest = *lowest - 1;
 	while (pints[i])
 		if (pints[i++][0] == 2)
 			return (1);
 	return (0);
+}
+
+void	get_next_highest(int *ants, int i, int nants, int *lowest)
+{
+	int	tog;
+
+	tog = 1;
+	while (i < nants)
+	{
+		if (ants[i] == *lowest)
+			return ;
+		i++;
+	}
+	*lowest = *lowest - 1;
 }
 
 void	make_ants_go(t_l_data *d, t_l_p **p, int *ants)
@@ -184,38 +219,43 @@ void	make_ants_go(t_l_data *d, t_l_p **p, int *ants)
 	int	*paths;
 	int	*antn;
 	int	antput;
+	int lowest;
 
 	make_p_table(p, d);
-	paths = det_paths(d->nants, d->pints);
+	paths = det_paths(d->nants, d->pints, d);
 	convert_ants_to_neg_indexes(ants, paths);
 	antn = initantn(ants, d->nants);
 	i = 0;
-	d->scone = test_scone(d->pints);
+	lowest = 0;
+	d->scone = test_scone(d->pints, &lowest, ants, d->nants);
 	antput = 0;
-	while (d->nants)
+	d->nantsb = d->nants;
+	while (d->nantsb)
 	{
 		pi = 0;
-			antput = 0;
+		antput = 0;
+		lowest = get_highest(ants, d->nants, lowest + 1);
 		while (paths[pi] != -1)
 		{
 			i = get_i(paths, pi);
 			imax = i + paths[pi];
 			while (i < imax)
 			{
-				if (ants[i] > 1 && ants[i] <= d->pints[pi][0])
+				get_next_highest(ants, i, d->nants, &lowest);
+				if (ants[i] > 1 && ants[i] <= d->pints[pi][0] && ants[i] == lowest)
 				{
 					if (!d->first && !d->scone)
 						ft_putchar(' ');
 					ft_printf("L%d-%s", antn[i], d->all[d->pints[pi][ants[i]]]->name);
 					antput = 1;
 				if (d->all[d->pints[pi][ants[i]]]->startend == 2)
-					d->nants--;
+					d->nantsb--;
 				if (d->nants && d->scone)
 					ft_putchar(' ');
 					d->first = 0;
-				}
 				ants[i]++;
 				i++;
+				}
 			}
 			pi++;
 		}

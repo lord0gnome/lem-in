@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:06:52 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/24 16:23:58 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/26 11:31:35 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void		init_l_data_more(t_l_data *d)
 	d->repairorder = 0;
 	d->scone = 0;
 	d->first = 1;
+	d->nantsb = -1;
 }
 
 t_l_data	*init_l_data(t_l_error *error)

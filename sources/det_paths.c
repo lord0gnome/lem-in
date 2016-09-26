@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/22 13:13:06 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/24 15:15:21 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/26 11:31:35 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,30 +41,29 @@ void	print_path_ant_distribution(int *path_ants)
 	}
 }
 
-int	*det_paths(int nant, int **paths)
+
+int	*det_paths(int nant, int **paths, t_l_data *d)
 {
-	int	i;
 	int	diff;
 	int *ret;
-	int	ibck;
 	int	tot;
 
 	ret = init_ret(paths);
-	i = 0;
-	while (paths[i] && nant)
+	d->i = 0;
+	while (paths[d->i] && nant)
 	{
 		diff = 0;
-		if (paths[i + 1])
-			diff = ft_abs(paths[i][0] - paths[i + 1][0]);
-		ibck = i;
-		i = 0;
-		while (i <= ibck && diff && nant)
+		if (paths[d->i + 1])
+			diff = ft_abs(paths[d->i][0] - paths[d->i + 1][0]);
+		d->i2 = d->i;
+		d->i = 0;
+		while (d->i <= d->i2 && diff && nant)
 		{
-			i = i > ibck ? 0 : i;
+			d->i = d->i > d->i2 ? 0 : d->i;
 			if (nant - diff >= 0)
 			{
 				nant -= diff;
-				ret[i] += diff;
+				ret[d->i] += diff;
 			}
 			else if (nant - 1 >= 0)
 			{
@@ -72,22 +71,22 @@ int	*det_paths(int nant, int **paths)
 				while (tot < diff && nant - 1 >= 0)
 				{
 					tot++;
-					ret[i]++;
+					ret[d->i]++;
 					nant--;
 				}
 			}
-			i++;
+			d->i++;
 		}
-		i = ibck;
-		i++;
+		d->i = d->i2;
+		d->i++;
 	}
-	i = 0;
+	d->i = 0;
 	while (nant)
 	{
-		i = ret[i] == -1 ? 0 : i;
-		ret[i]++;
+		d->i = ret[d->i] == -1 ? 0 : d->i;
+		ret[d->i]++;
 		nant--;
-		i++;
+		d->i++;
 	}
 	return (ret);
 }
