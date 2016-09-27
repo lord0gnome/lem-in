@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:06:52 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/26 11:31:35 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/27 19:04:53 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void		init_l_data_more(t_l_data *d)
 	d->scone = 0;
 	d->first = 1;
 	d->nantsb = -1;
+	d->f = 0;
 }
 
 t_l_data	*init_l_data(t_l_error *error)
@@ -43,6 +44,9 @@ t_l_data	*init_l_data(t_l_error *error)
 	init_l_data_more(d);
 	d->err = error;
 	d->ants = NULL;
+	d->antn = NULL;
+	d->plen = NULL;
+	d->anti = NULL;
 	d->rooms = NULL;
 	d->lines = NULL;
 	d->frst = NULL;
@@ -71,27 +75,29 @@ static int	init_all_cntd(t_l_data *d, t_s_list *travel, int tmp)
 			return (d->err->errno);
 	}
 	else if (travel->flag == 4 && (tmp = is_command(travel->str)))
-	{
-		d->command = tmp;
-		return (1);
-	}
-	else if (travel->flag == 3 && (!is_link(travel->str, d)))
-	{
-		add_link(d->r1, d->r2, d);
-		return (1);
-	}
+		return (d->command = tmp);
 	else if (travel->flag == 2 && !is_room(travel->str, d))
 	{
 		if (!(add_room(d, ft_strgrab(travel->str, ' '))))
-			d->err->errno = 103;
+			d->err->errno = 2;
 		return (1);
 	}
+	else if (travel->flag == 0)
+		return (1);
+	else if (travel->flag == 3 && (!is_link(travel->str, d)))
+	{
+		if (add_link(d->r1, d->r2) != 0)
+			return (travel->flag = -1);
+		return (1);
+	}
+	travel->flag = -1;
 	return (0);
 }
 
 int			init_all(t_l_data *d)
 {
 	t_s_list	*travel;
+	t_s_list	*p;
 	int			tmp;
 	int			flag;
 
@@ -101,10 +107,21 @@ int			init_all(t_l_data *d)
 	{
 		tmp = 0;
 		if (travel->flag == 2 && flag == 3)
-			return (d->err->errno = 131);
+		{
+			travel->flag = -1;
+			return (1);
+		}
 		else if (init_all_cntd(d, travel, tmp))
 			;
-		flag = travel->flag == 3 ? 3 : 2;
+		else
+			continue ;
+		if (travel->flag == -1 || d->err->errno)
+		{
+			p->next = NULL;
+			return (d->err->errno);
+		}
+		flag = travel->flag == 3 || flag == 3 ? 3 : 2;
+		p = travel;
 		travel = travel->next;
 	}
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/10 13:32:03 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/19 11:29:08 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/27 16:36:26 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void		megatest(t_l_data *d)
 
 	a = d->all;
 	nrooms = d->allindex;
+	ft_printf("\n%sSTART OF TESTS%s\n", RED, RESET);
 	while (*nrooms != -2 && *nrooms != -1)
 	{
 		ft_printf("index [%s%4d%s] %s%5s%s, startend[%d], depth[%s%3d%s],",
@@ -46,8 +47,9 @@ void		megatest(t_l_data *d)
 			while (li++ < a[*nrooms]->lindexes[0])
 				megatest_extended(a[a[*nrooms]->lindexes[li]]);
 		}
-		ft_putchar('\n');
 		nrooms++;
+		if (*nrooms != -2 && *nrooms != -1)
+		ft_putchar('\n');
 	}
-	ft_printf("%sEND OF MEGATEST%s\n", BLUE, RESET);
+	ft_printf("%sEND OF TESTS%s\n", BLUE, RESET);
 }

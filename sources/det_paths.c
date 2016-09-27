@@ -6,13 +6,13 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/22 13:13:06 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/26 11:31:35 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/26 16:51:28 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem_in.h"
 
-static int *init_ret(int **paths)
+static int	*init_ret(int **paths)
 {
 	int *ret;
 	int	i;
@@ -22,71 +22,69 @@ static int *init_ret(int **paths)
 		i++;
 	ret = (int *)malloc(sizeof(int) * (i + 1));
 	ret[i] = -1;
-
 	i = 0;
 	while (*paths++)
 		ret[i++] = 0;
 	return (ret);
 }
 
-void	print_path_ant_distribution(int *path_ants)
+void		add_to_dplen(int tot, t_l_data *d, int nant)
 {
-	int i;
-
-	i = 0;
-	while (*path_ants != -1)
+	tot = 0;
+	while (tot < d->i2 && nant - 1 >= 0)
 	{
-		ft_printf("index %d has %d ants in it\n", i++, *path_ants);
-		path_ants++;
+		tot++;
+		d->plen[d->i]++;
+		nant--;
 	}
 }
 
-
-int	*det_paths(int nant, int **paths, t_l_data *d)
+int			det_paths2(int nant, t_l_data *d, int **paths, int ibck)
 {
-	int	diff;
-	int *ret;
 	int	tot;
 
-	ret = init_ret(paths);
+	d->i2 = 0;
+	if (paths[d->i + 1])
+		d->i2 = ft_abs(paths[d->i][0] - paths[d->i + 1][0]);
+	ibck = d->i;
+	d->i = -1;
+	tot = 0;
+	while (++d->i <= ibck && d->i2 && nant)
+	{
+		d->i = d->i > ibck ? 0 : d->i;
+		if (nant - d->i2 >= 0)
+		{
+			nant -= d->i2;
+			d->plen[d->i] += d->i2;
+		}
+		else if (nant - 1 >= 0)
+		{
+			add_to_dplen(tot, d, nant);
+		}
+	}
+	d->i = ibck;
+	d->i++;
+	return (nant);
+}
+
+int			*det_paths(int nant, int **paths, t_l_data *d)
+{
+	int	ibck;
+
+	d->plen = init_ret(paths);
 	d->i = 0;
+	ibck = 0;
 	while (paths[d->i] && nant)
 	{
-		diff = 0;
-		if (paths[d->i + 1])
-			diff = ft_abs(paths[d->i][0] - paths[d->i + 1][0]);
-		d->i2 = d->i;
-		d->i = 0;
-		while (d->i <= d->i2 && diff && nant)
-		{
-			d->i = d->i > d->i2 ? 0 : d->i;
-			if (nant - diff >= 0)
-			{
-				nant -= diff;
-				ret[d->i] += diff;
-			}
-			else if (nant - 1 >= 0)
-			{
-				tot = 0;
-				while (tot < diff && nant - 1 >= 0)
-				{
-					tot++;
-					ret[d->i]++;
-					nant--;
-				}
-			}
-			d->i++;
-		}
-		d->i = d->i2;
-		d->i++;
+		nant = det_paths2(nant, d, paths, ibck);
 	}
 	d->i = 0;
 	while (nant)
 	{
-		d->i = ret[d->i] == -1 ? 0 : d->i;
-		ret[d->i]++;
+		d->i = d->plen[d->i] == -1 ? 0 : d->i;
+		d->plen[d->i]++;
 		nant--;
 		d->i++;
 	}
-	return (ret);
+	return (d->plen);
 }

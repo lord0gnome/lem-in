@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/07 17:57:27 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/20 11:43:20 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/27 12:52:10 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void		init_room_tab(t_l_data *d, t_l_rooms *first)
 		while (travel && travel->startend != 0)
 			travel = travel->next;
 		if (!travel)
-			break ;
+			return ;
 		while (d->all[d->i] != NULL && d->i < d->nrooms)
 			d->i++;
 		d->all[d->i] = travel;

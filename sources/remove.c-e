@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/19 11:03:55 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/27 15:33:09 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/27 15:32:07 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,32 +24,32 @@ static void	remove_link(t_l_links *room, t_l_links *remove)
 
 static void	test_duplicates(t_l_rooms *room)
 {
-	t_l_links	*cl;
+	t_l_links	*clink;
 	t_l_links	*rbck;
-
-	cl = room->links;
+	
+	clink = room->links;
 	rbck = room->links;
 	while (rbck)
 	{
-		cl = rbck;
-		while (cl)
+		clink = rbck;
+		while (clink)
 		{
-			cl = cl->next;
-			if (cl && rbck && cl != rbck && rbck->roomptr == cl->roomptr)
+			clink = clink->next;
+			if (clink && rbck && clink != rbck && rbck->roomptr == clink->roomptr)
 			{
-				remove_link(room->links, cl);
+				remove_link(room->links, clink);
 				break ;
 			}
 		}
-		if (cl)
+		if (clink)
 			continue ;
 		rbck = rbck->next;
 	}
 }
 
-void		remove_dup_paths(t_l_rooms **all, int nrooms)
+void	remove_dup_paths(t_l_rooms **all, int nrooms)
 {
-	int			i;
+	int	i;
 	t_l_links	*curr;
 
 	i = 0;
@@ -63,7 +63,7 @@ void		remove_dup_paths(t_l_rooms **all, int nrooms)
 	}
 }
 
-int			r_ncse(t_l_rooms **all, int *allindex, t_l_data *d)
+int	r_ncse(t_l_rooms **all, int *allindex, t_l_data *d)
 {
 	int	*aib;
 

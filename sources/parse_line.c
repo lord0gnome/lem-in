@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/04 14:46:01 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/19 13:02:58 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/27 19:04:19 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int			is_ants(char *str)
 	int	i;
 
 	i = 0;
+	if (str[i] == '+')
+		i++;
 	while (str[i] && ft_isdigit(str[i]))
 	{
 		i++;
@@ -32,15 +34,17 @@ int			is_room(char *str, t_l_data *d)
 	while (str[d->i2] && str[d->i2] != ' ')
 		d->i2++;
 	if (!str[d->i2])
-		return (d->err->errno = 100);
+		return (1);
 	if (str[d->i2] && str[d->i2] != ' ')
-		return (d->err->errno = 101);
+		return (1);
 	d->i2++;
 	d->i2 += ft_atoi_addlen(&(d->cx), str + d->i2);
-	if (str[d->i2] && str[d->i2] != ' ')
-		return (d->err->errno = 102);
+	if ((str[d->i2] && str[d->i2] != ' ') || !str[d->i2])
+		return (1);
 	d->i2++;
 	d->i2 += ft_atoi_addlen(&(d->cy), str + d->i2);
+	if (str[d->i2])
+		return (1);
 	return (0);
 }
 
@@ -72,7 +76,7 @@ int			is_link(char *link, t_l_data *d)
 	trav = d->rooms;
 	while (trav && !d->r1)
 	{
-		d->r1 = d->i >= 0 && !ft_strncmp(link, trav->name, d->i) ? trav : NULL;
+		d->r1 = d->i > 0 && !ft_strncmp(link, trav->name, d->i) ? trav : NULL;
 		trav = d->r1 ? trav : trav->next;
 	}
 	trav = d->rooms;
@@ -86,7 +90,7 @@ int			is_link(char *link, t_l_data *d)
 	return (1);
 }
 
-int			parse_line(t_l_data *d)
+void		parse_line(t_l_data *d)
 {
 	t_s_list	*travel;
 	int			tmp;
@@ -100,7 +104,8 @@ int			parse_line(t_l_data *d)
 		else if (travel->flag && (tmp = is_command(travel->str)))
 			travel->flag = tmp == 1 || tmp == 2 ? 4 : 0;
 		else if (travel->flag && (!is_link(travel->str, d) ||
-					(ft_findfirstlastdelim(travel->str, '-', 0) != -1)))
+					((ft_findfirstlastdelim(travel->str, '-', 0) != -1) &&
+					is_room(travel->str, d))))
 			travel->flag = 3;
 		else if (travel->flag && !is_room(travel->str, d))
 			travel->flag = 2;
@@ -108,7 +113,8 @@ int			parse_line(t_l_data *d)
 			travel->flag = 0;
 		else
 			travel->flag = -1;
+		if (travel->flag == -1)
+			return ;
 		travel = travel->next;
 	}
-	return (1);
 }

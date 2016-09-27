@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:05:22 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/24 15:16:30 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/27 19:37:26 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,10 @@ int			is_output_line(char *str)
 
 int			parse_fd(t_l_data *d)
 {
+	d->first = 0;
 	while (get_next_line(d->fd, &d->l) > 0)
-		d->lines = ft_add_s_list(d->l, is_output_line(d->l), d->lines);
+		if ((d->lines = ft_s_list(d->l, is_output_line(d->l), d)) == NULL)
+			break;
 	return (1);
 }
 
@@ -54,9 +56,9 @@ static int	parse_arguments_more_more(t_l_data *d, char **argv)
 	if (argv[d->i][d->i2 + 2])
 		d->fd = open(argv[d->i] + d->i2 + 2, O_RDONLY);
 	else
-		return (d->err->errno = 241);
+		return (d->err->errno = 3);
 	if (d->fd < 0)
-		return (d->err->errno = 242);
+		return (d->err->errno = 4);
 	return (0);
 }
 
@@ -67,7 +69,7 @@ int			parse_arguments(t_l_data *d, int argc, char **av)
 	{
 		d->i2 = 0;
 		if (av[d->i][d->i2] && av[d->i][d->i2] != '-')
-			return (d->err->errno = 240);
+			return (d->err->errno = 5);
 		else
 			d->i2++;
 		while (av[d->i][d->i2])
@@ -80,7 +82,7 @@ int			parse_arguments(t_l_data *d, int argc, char **av)
 			else if (parse_arguments_more(d, av))
 				;
 			else
-				return (d->err->errno = 243);
+				return (d->err->errno = 6);
 			d->i2++;
 		}
 	}

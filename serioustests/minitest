@@ -1,0 +1,24 @@
+5
+##start
+one  1 1
+two 2 2
+three 3 3
+four 4 4
+five 5 5
+#comment with spaces
+#commentroom 4 3
+six 6 6
+seven 7 7
+##ingoreablecommand
+eight 8 8
+##end
+nine 9 9
+one-three
+three-five
+three-six
+four-seven
+five-eight
+six-eight
+seven-nine
+nine-eight
+two-four

@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/14 14:32:14 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/24 15:59:30 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/27 12:50:28 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,31 +91,25 @@ void			resolve(t_l_rooms *start, t_l_data *d)
 {
 	int			p;
 	int			startint;
-	t_l_rooms	**a;
 	t_l_rooms	*sbck;
 	t_l_p		*travel;
 
 	sbck = start;
-	a = d->all;
 	p = get_most_potential_paths(d->all);
-	d->paths = (t_l_p**)malloc(sizeof(t_l_p*) * (p + 1));
+	if ((d->paths = (t_l_p**)malloc(sizeof(t_l_p*) * (p + 1))) == NULL)
+		return ;
 	d->paths[p] = NULL;
 	startint = 0;
-	while (a[startint]->startend != 1)
+	while (d->all[startint]->startend != 1)
 		startint++;
 	travel = NULL;
-	while (d->i2 < p)
+	while (++d->i2 < p)
 	{
 		d->paths[d->i2] = NULL;
 		start = sbck;
 		start->used = 0;
 		d->paths[d->i2] = add_room_to_path(d->paths[d->i2], startint);
-		if ((d->i = res_loop(d, a, travel, start)) == 0)
-		{
-			d->paths[d->i2] = NULL;
+		if ((d->i = res_loop(d, d->all, travel, start)) == 0)
 			break ;
-		}
-//		print_path(d->paths[d->i2], d);
-		d->i2++;
 	}
 }

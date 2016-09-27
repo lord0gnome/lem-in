@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/30 13:13:57 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/01 13:13:12 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/26 15:47:39 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int		ordered_flags(t_s_list *travel, t_l_data *d)
 	while (first)
 	{
 		if (flag == 3 && first->flag == 2)
-			return (d->err->errno = 130);
+			return (d->err->errno = 13);
 		if (first->flag == 3)
 			flag = 3;
 		first = first->next;

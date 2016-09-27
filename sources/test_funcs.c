@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/01 13:47:55 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/19 16:36:06 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/27 18:28:05 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int			test_ants_first(t_s_list *antsline, t_l_error *err)
 	antsline = antsline->prev;
 	while (antsline)
 	{
-		if (antsline->flag != 0)
+		if (antsline->flag != 0 && antsline->flag != 4)
 			return (err->errno = 138);
 		antsline = antsline->prev;
 	}
@@ -96,14 +96,14 @@ int			test_strt_end(t_l_rooms *travel, t_l_error *err)
 		travel = travel->next;
 	}
 	if (!start && !end)
-		return (err->errno = 134);
+		return (err->errno = 7);
 	if (start && !end)
-		return (err->errno = 135);
+		return (err->errno = 8);
 	if (end && !start)
-		return (err->errno = 136);
+		return (err->errno = 9);
 	if (end != 1)
-		return (err->errno = 137);
+		return (err->errno = 10);
 	if (start != 1)
-		return (err->errno = 138);
+		return (err->errno = 11);
 	return (0);
 }

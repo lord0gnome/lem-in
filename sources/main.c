@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 15:18:58 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/26 11:31:35 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/27 18:52:57 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,28 +17,54 @@
 #include <unistd.h>
 #include <time.h>
 
+static void	exitfunc(int e)
+{
+	if (e == 1)
+		ft_putstr("Error : No data\n");
+	else if (e == 18)
+		ft_putstr("Error : Start not connected to end\n");
+	else
+		ft_putstr("Error : Invalid line/Other error\n");
+	exit(-1);
+}
+
+static int	test_start(t_l_data *d)
+{
+	int	*nrooms;
+
+	nrooms = d->allindex;
+	while (*nrooms != -2 && *nrooms != -1)
+	{
+		if (d->all[*nrooms]->startend == 1)
+			return (1);
+		nrooms++;
+	}
+	return (0);
+}
+
 static int	main_cntd(t_l_data *data)
 {
-	test_strt_end(data->rooms, data->err);
-	ft_print_members(data->lines);
+	if (test_strt_end(data->rooms, data->err))
+		exitfunc(data->err->errno);
 	make_ants(data);
 	data->frst = data->rooms;
-	remove_noconnects(data->frst, data);
-	data->frst = data->rooms;
 	init_room_tab(data, data->frst);
+	remove_dup_paths(data->all, data->nrooms);
 	set_lindexes_for_room(data->all, data);
 	set_depth(data->all, data);
-	p_a_st(data->ants, data->all, data->allindex);
-	//megatest(data);
-	while (data->frst->startend != 1)
+	if (!test_start(data))
+		exitfunc(data->err->errno = 18);
+	ft_print_members(data->lines);
+	if (data->visual)
+		megatest(data);
+	while (data->frst && data->frst->startend != 1)
 		data->frst = data->frst->next;
-	data->i2 = 0;
-	double		tt = (double)clock() / CLOCKS_PER_SEC;
+	data->i2 = -1;
 	resolve(data->frst, data);
+	data->paths[data->i2] = NULL;
 	data->i2 = 0;
 	ft_putchar('\n');
 	make_ants_go(data, data->paths, data->ants);
-	ft_printf("Resolution time : %d\n", (int)(((double)clock() / CLOCKS_PER_SEC - tt) * 1000000));
 	return (1);
 }
 
@@ -54,21 +80,20 @@ int			main(int argc, char **argv)
 		return (ft_printf("ERROR : %d, %s\n", err->errno, err->errstr));
 	if (read(data->fd, NULL, 0) < 0)
 		return (ft_printf("ERROR : Read a directory / Other read error"));
-	ft_printf("arguments parse SUCCESS\n");
 	parse_line(data);
-	ft_printf("parse lines SUCCESS\n");
-	if (data->repairorder)
-		test_order(data);
-	init_all(data);
-	ft_printf("init all SUCCESS\n");
-	if (data->nants <= 0 || data->err->errno)
-		return (1);
-	data->nrooms = count_rooms(data->rooms);
+	if (data->err->errno)
+		return (write(2, "Error\n", 7));
+	if (!init_all(data))
+	{
+		ft_printf("printing member for debug\n");
+		ft_print_members(data->lines);
+		exitfunc(data->err->errno);
+	}
+	if (data->nants <= 0)
+		return (write(2, "Error : No ants\n", 16));
+	if ((data->nrooms = count_rooms(data->rooms)) == 0)
+		return (write(2, "Error : No rooms\n", 17));
 	data->frst = data->rooms;
 	main_cntd(data);
-	if (data->nants == -1 || data->nants == 0 || data->nants < 0)
-		data->err->errno = 132;
-	if (data->err->errno != 0 && !data->ignoreerr)
-		return (ft_printf("ERROR : %d, %s\n", err->errno, err->errstr));
 	return (0);
 }
