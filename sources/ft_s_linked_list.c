@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/20 13:01:49 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/27 19:37:53 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/27 19:53:45 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,13 @@ int	is_random(char *str)
 	int	i;
 
 	i = 0;
-	if (str[i] == '+')
+	if (str[i] == '+' || ft_isdigit(str[i]))
 	{
-		i++;
-		while (str[i])
-		{
-			if (!isdigit(str[i]))
-				return (1);
+		i = str[i] == '+' ? i++ : i;
+		while (str[i] && ft_isdigit(str[i]))
 			i++;
-		}
+		if (!str[i])
+			return (0);
 	}
 	else if (str[i] != '#')
 		return (1);
