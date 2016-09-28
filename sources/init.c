@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:06:52 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/28 14:47:08 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/28 18:03:49 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,21 +68,18 @@ t_l_error	*init_l_error(void)
 
 static int	init_all_cntd(t_l_data *d, t_s_list *travel, int tmp)
 {
-	if (travel->flag == 5)
+	if (travel->flag == 5 && d->nants == -1)
 	{
 		if (!test_ants_first(travel, d->err))
-			return (d->nants = ft_atoi(travel->str));
+			return (d->nants = lem_in_atoi(travel->str));
 		else
 			return (d->err->errno);
 	}
 	else if (travel->flag == 4 && (tmp = is_command(travel->str)))
 		return (d->command = tmp);
-	else if (travel->flag == 2 && !is_room(travel->str, d))
-	{
-		if (!(add_room(d, ft_strgrab(travel->str, ' '))))
-			d->err->errno = 2;
+	else if (travel->flag == 2 && !is_room(travel->str, d) &&
+			add_room(d, ft_strgrab(travel->str, ' ')))
 		return (1);
-	}
 	else if (travel->flag == 0)
 		return (1);
 	else if (travel->flag == 3 && (!is_link(travel->str, d)))
@@ -112,10 +109,9 @@ int			init_all(t_l_data *d)
 			;
 		else
 			continue ;
-		if (travel->flag == -1 || d->err->errno)
+		if (travel->flag == -1)
 		{
-			p->next = NULL;
-			return (d->err->errno);
+			return (1);
 		}
 		d->fd = travel->flag == 3 || d->fd == 3 ? 3 : 2;
 		p = travel;

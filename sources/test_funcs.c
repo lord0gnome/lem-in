@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/01 13:47:55 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/28 14:35:38 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/28 15:33:39 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void		print_path(t_l_p *path, t_l_data *d)
 			ft_wait(d->slow);
 		path = path->n;
 	}
+	if (d->slow && d->slow >= 1)
+		ft_wait(d->slow);
 }
 
 void		print_room(t_l_rooms *room, t_l_data *d)

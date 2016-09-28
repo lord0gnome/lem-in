@@ -6,29 +6,27 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/20 13:01:49 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/28 14:52:28 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/28 19:14:44 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem_in.h"
 #include <stdlib.h>
 
-int			is_random(char *str)
+void		det_line(int flag)
 {
-	int	i;
-
-	i = 0;
-	if (str[i] == '+' || ft_isdigit(str[i]))
-	{
-		i = str[i] == '+' ? i++ : i;
-		while (str[i] && ft_isdigit(str[i]))
-			i++;
-		if (!str[i])
-			return (0);
-	}
-	else if (str[i] != '#')
-		return (1);
-	return (0);
+	if (flag == 0)
+		ft_putstr("Comment : ");
+	else if (flag == 2)
+		ft_putstr("Room    : ");
+	else if (flag == 3)
+		ft_putstr("Link    : ");
+	else if (flag == 4)
+		ft_putstr("Command : ");
+	else if (flag == 5)
+		ft_putstr("Numants : ");
+	else if (flag == -1)
+		ft_putstr("ERROR   : ");
 }
 
 void		ft_print_members(t_s_list *list, t_l_data *d)
@@ -41,10 +39,7 @@ void		ft_print_members(t_s_list *list, t_l_data *d)
 			continue ;
 		}
 		if (d->debug)
-		{
-			ft_putnbr(list->flag);
-			ft_putchar(' ');
-		}
+			det_line(list->flag);
 		ft_putendl(list->str);
 		list = list->next;
 	}

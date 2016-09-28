@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/18 16:01:09 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/27 14:17:15 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/28 16:52:21 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ int		add_link(t_l_rooms *r1, t_l_rooms *r2)
 {
 	if (!r1 || !r2)
 		return (1);
+	if (r1->name == r2->name)
+		return (0);
 	if (!r1->links && !r2->links)
 	{
 		init_link(r1, r2);

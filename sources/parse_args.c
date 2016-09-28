@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:05:22 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/28 14:53:11 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/28 19:11:39 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,12 @@ int			parse_fd(t_l_data *d)
 {
 	d->first = 0;
 	while (get_next_line(d->fd, &d->l) > 0)
+	{
 		if ((d->lines = ft_s_list(d->l, is_output_line(d->l), d)) == NULL)
 			break ;
+		if (d->l)
+			free(d->l);
+	}
 	return (1);
 }
 

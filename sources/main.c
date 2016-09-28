@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 15:18:58 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/28 14:44:17 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/28 19:20:28 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,9 @@ static void	exitfunc(int e, t_l_data *d)
 {
 	if (d->debug)
 		ft_print_members(d->lines, d);
-	if (e == 1)
-		ft_putstr("ERROR\n");
-	else if (e == 18)
-		ft_putstr("ERROR\n");
-	else
-		ft_putstr("ERROR\n");
+	if (e)
+		;
+	ft_putstr("ERROR\n");
 	exit(-1);
 }
 
@@ -84,13 +81,13 @@ int			main(int argc, char **argv)
 		return (ft_printf("ERROR\n"));
 	parse_line(data);
 	if (data->err->errno)
-		return (write(2, "ERROR\n", 7));
+		exitfunc(data->err->errno, data);
 	if (!init_all(data))
 		exitfunc(data->err->errno, data);
 	if (data->nants <= 0)
-		return (write(2, "ERROR\n", 7));
+		exitfunc(data->err->errno, data);
 	if ((data->nrooms = count_rooms(data->rooms)) == 0)
-		return (write(2, "ERROR\n", 7));
+		exitfunc(data->err->errno, data);
 	data->frst = data->rooms;
 	main_cntd(data);
 	return (0);

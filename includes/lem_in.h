@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 15:16:32 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/28 14:46:54 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/28 18:07:58 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # include "../libft/libft.h"
 # include "../printf/ft_printf.h"
 # include "../gnl/get_next_line.h"
+# include <limits.h>
 # include "color.h"
 # define START 1
 # define END 2
@@ -76,7 +77,7 @@ typedef struct				s_l_data
 	char					first;
 	char					f;
 	int						nants;
-	int						nantsb;
+	long					nantsb;
 	int						nrooms;
 	int						i;
 	int						i2;
@@ -109,6 +110,7 @@ typedef struct				s_l_data
 	t_l_p					**paths;
 }							t_l_data;
 
+int							is_random(char *str);
 int							is_room_cont(char *str, t_l_data *d);
 int							lem_in_atoi(char *str);
 int							is_output_line(char *str);

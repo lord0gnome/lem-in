@@ -6,17 +6,19 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/04 14:46:01 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/28 14:52:43 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/28 18:39:07 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem_in.h"
+#include "../includes/lem_in.h"
 
-int			is_ants(char *str)
+int			is_ants(char *str, t_l_data *d)
 {
 	int	i;
 
 	i = 0;
+	if (d->nants != -1)
+		return (0);
 	if (str[i] == '+')
 		i++;
 	while (str[i] && ft_isdigit(str[i]))
@@ -37,15 +39,13 @@ int			is_room(char *str, t_l_data *d)
 		return (1);
 	d->i2++;
 	d->cx = lem_in_atoi(str + d->i2);
-	if (str[d->i2] == '-')
+	if (str[d->i2] == '-' || str[d->i2] == '+')
 		d->i2++;
 	if (!ft_isdigit(str[d->i2]))
 		return (1);
 	if (!is_room_cont(str, d))
 		return (1);
 	d->i2++;
-	if (str[d->i2])
-		return (1);
 	return (0);
 }
 
@@ -100,7 +100,7 @@ void		parse_line(t_l_data *d)
 	while (travel && (travel->flag != -1))
 	{
 		tmp = 0;
-		if (travel->flag && d->nants == -1 && is_ants(travel->str))
+		if (travel->flag && d->nants == -1 && is_ants(travel->str, d))
 			travel->flag = 5;
 		else if (travel->flag && (tmp = is_command(travel->str)))
 			travel->flag = tmp == 1 || tmp == 2 ? 4 : 0;
