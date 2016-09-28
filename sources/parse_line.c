@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/04 14:46:01 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/27 19:04:19 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/28 14:52:43 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,19 @@ int			is_ants(char *str)
 int			is_room(char *str, t_l_data *d)
 {
 	d->i2 = 0;
-	while (str[d->i2] && str[d->i2] != ' ')
+	while (str[d->i2] && str[d->i2] != ' ' && str[d->i2] != '-')
 		d->i2++;
-	if (!str[d->i2])
-		return (1);
-	if (str[d->i2] && str[d->i2] != ' ')
+	if (!str[d->i2] || (str[d->i2] && str[d->i2] != ' '))
 		return (1);
 	d->i2++;
-	d->i2 += ft_atoi_addlen(&(d->cx), str + d->i2);
-	if ((str[d->i2] && str[d->i2] != ' ') || !str[d->i2])
+	d->cx = lem_in_atoi(str + d->i2);
+	if (str[d->i2] == '-')
+		d->i2++;
+	if (!ft_isdigit(str[d->i2]))
+		return (1);
+	if (!is_room_cont(str, d))
 		return (1);
 	d->i2++;
-	d->i2 += ft_atoi_addlen(&(d->cy), str + d->i2);
 	if (str[d->i2])
 		return (1);
 	return (0);

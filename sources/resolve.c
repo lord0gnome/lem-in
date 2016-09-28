@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/14 14:32:14 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/27 12:50:28 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/28 14:52:06 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int		novalidpath(t_l_p *path, t_l_data *d)
 	{
 		if (d->all[current->lindexes[i]]->startend != 1 &&
 				(!d->all[current->lindexes[i]]->used ||
-			d->all[current->lindexes[i]]->startend == 2))
+				d->all[current->lindexes[i]]->startend == 2))
 			return (0);
 	}
 	if (current->startend == 1)
@@ -111,5 +111,6 @@ void			resolve(t_l_rooms *start, t_l_data *d)
 		d->paths[d->i2] = add_room_to_path(d->paths[d->i2], startint);
 		if ((d->i = res_loop(d, d->all, travel, start)) == 0)
 			break ;
+		print_path(d->paths[d->i2], d);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 15:16:32 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/27 19:23:20 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/28 14:46:54 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,12 @@ typedef struct				s_l_data
 	int						startlinks;
 	char					help;
 	char					visual;
+	int						slow;
+	char					debug;
 	char					nocomment;
-	char					ignoreerr;
 	char					order;
 	char					command;
-	char					repairorder;
+	char					showpaths;
 	int						*ants;
 	int						*antn;
 	int						*anti;
@@ -108,8 +109,10 @@ typedef struct				s_l_data
 	t_l_p					**paths;
 }							t_l_data;
 
+int							is_room_cont(char *str, t_l_data *d);
+int							lem_in_atoi(char *str);
 int							is_output_line(char *str);
-void						ft_print_members(t_s_list *list);
+void						ft_print_members(t_s_list *list, t_l_data *d);
 void						ft_swap_members(t_s_list **m1, t_s_list **m2);
 t_s_list					*ft_create_s_list(char *str, char flag);
 t_s_list					*ft_s_list(char *str, char flag, t_l_data *d);

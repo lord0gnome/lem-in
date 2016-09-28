@@ -6,14 +6,14 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/20 13:01:49 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/27 19:53:45 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/28 14:52:28 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem_in.h"
 #include <stdlib.h>
 
-int	is_random(char *str)
+int			is_random(char *str)
 {
 	int	i;
 
@@ -31,12 +31,20 @@ int	is_random(char *str)
 	return (0);
 }
 
-void		ft_print_members(t_s_list *list)
+void		ft_print_members(t_s_list *list, t_l_data *d)
 {
-	while (list && list->flag != -1)
+	while (list && (d->debug || list->flag != -1))
 	{
-		ft_putnbr(list->flag);
-		ft_putchar(' ');
+		if (d->nocomment && list->flag == 0)
+		{
+			list = list->next;
+			continue ;
+		}
+		if (d->debug)
+		{
+			ft_putnbr(list->flag);
+			ft_putchar(' ');
+		}
 		ft_putendl(list->str);
 		list = list->next;
 	}

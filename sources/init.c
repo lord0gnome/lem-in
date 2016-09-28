@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:06:52 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/27 19:04:53 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/28 14:47:08 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ void		init_l_data_more(t_l_data *d)
 	d->help = 0;
 	d->nants = -1;
 	d->visual = 0;
-	d->nocomment = 0;
 	d->order = 0;
-	d->ignoreerr = 0;
-	d->repairorder = 0;
+	d->showpaths = 0;
+	d->nocomment = 0;
+	d->slow = 0;
 	d->scone = 0;
 	d->first = 1;
 	d->nantsb = -1;
@@ -41,6 +41,7 @@ t_l_data	*init_l_data(t_l_error *error)
 	d->l = NULL;
 	d->newl = NULL;
 	d->i = 0;
+	d->debug = 0;
 	init_l_data_more(d);
 	d->err = error;
 	d->ants = NULL;
@@ -99,18 +100,14 @@ int			init_all(t_l_data *d)
 	t_s_list	*travel;
 	t_s_list	*p;
 	int			tmp;
-	int			flag;
 
-	flag = 2;
+	d->fd = 2;
 	travel = d->lines;
 	while (travel && (travel->flag != -1))
 	{
 		tmp = 0;
-		if (travel->flag == 2 && flag == 3)
-		{
+		if (travel->flag == 2 && d->fd == 3)
 			travel->flag = -1;
-			return (1);
-		}
 		else if (init_all_cntd(d, travel, tmp))
 			;
 		else
@@ -120,7 +117,7 @@ int			init_all(t_l_data *d)
 			p->next = NULL;
 			return (d->err->errno);
 		}
-		flag = travel->flag == 3 || flag == 3 ? 3 : 2;
+		d->fd = travel->flag == 3 || d->fd == 3 ? 3 : 2;
 		p = travel;
 		travel = travel->next;
 	}

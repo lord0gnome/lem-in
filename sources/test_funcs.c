@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/01 13:47:55 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/27 18:28:05 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/28 14:35:38 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,15 @@ void		print_path(t_l_p *path, t_l_data *d)
 	int	nlinks;
 
 	nlinks = 0;
+	if (!d->showpaths)
+		return ;
 	while (path)
 	{
 		ft_printf("PATH index is %d\n", nlinks++);
 		print_room(d->all[path->room], d);
 		ft_printf("going to next index\n");
+		if (d->slow && d->slow >= 1)
+			ft_wait(d->slow);
 		path = path->n;
 	}
 }

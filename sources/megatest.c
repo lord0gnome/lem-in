@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/10 13:32:03 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/27 16:36:26 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/28 14:51:42 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 static void	megatest_extended(t_l_rooms *room)
 {
 	ft_printf("%s%5s%s               startend[%d], depth[%s%3d%s]", RED,
-	room->name, RESET,
-	room->startend, CYAN,
-	room->depth, RESET);
+			room->name, RESET,
+			room->startend, CYAN,
+			room->depth, RESET);
 	ft_printf(", x[%03d], y[%03d], LINKTOTAL[%s%d%s]\n",
-	room->x,
-	room->y,
-	YELLOW, room->lindexes[0], RESET);
+			room->x,
+			room->y,
+			YELLOW, room->lindexes[0], RESET);
 }
 
 void		megatest(t_l_data *d)
@@ -32,7 +32,6 @@ void		megatest(t_l_data *d)
 
 	a = d->all;
 	nrooms = d->allindex;
-	ft_printf("\n%sSTART OF TESTS%s\n", RED, RESET);
 	while (*nrooms != -2 && *nrooms != -1)
 	{
 		ft_printf("index [%s%4d%s] %s%5s%s, startend[%d], depth[%s%3d%s],",
@@ -49,7 +48,7 @@ void		megatest(t_l_data *d)
 		}
 		nrooms++;
 		if (*nrooms != -2 && *nrooms != -1)
-		ft_putchar('\n');
+			ft_putchar('\n');
 	}
 	ft_printf("%sEND OF TESTS%s\n", BLUE, RESET);
 }

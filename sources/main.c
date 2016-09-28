@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 15:18:58 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/27 18:52:57 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/28 14:44:17 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,16 @@
 #include <unistd.h>
 #include <time.h>
 
-static void	exitfunc(int e)
+static void	exitfunc(int e, t_l_data *d)
 {
+	if (d->debug)
+		ft_print_members(d->lines, d);
 	if (e == 1)
-		ft_putstr("Error : No data\n");
+		ft_putstr("ERROR\n");
 	else if (e == 18)
-		ft_putstr("Error : Start not connected to end\n");
+		ft_putstr("ERROR\n");
 	else
-		ft_putstr("Error : Invalid line/Other error\n");
+		ft_putstr("ERROR\n");
 	exit(-1);
 }
 
@@ -45,7 +47,7 @@ static int	test_start(t_l_data *d)
 static int	main_cntd(t_l_data *data)
 {
 	if (test_strt_end(data->rooms, data->err))
-		exitfunc(data->err->errno);
+		exitfunc(data->err->errno, data);
 	make_ants(data);
 	data->frst = data->rooms;
 	init_room_tab(data, data->frst);
@@ -53,8 +55,8 @@ static int	main_cntd(t_l_data *data)
 	set_lindexes_for_room(data->all, data);
 	set_depth(data->all, data);
 	if (!test_start(data))
-		exitfunc(data->err->errno = 18);
-	ft_print_members(data->lines);
+		exitfunc(data->err->errno = 18, data);
+	ft_print_members(data->lines, data);
 	if (data->visual)
 		megatest(data);
 	while (data->frst && data->frst->startend != 1)
@@ -76,23 +78,19 @@ int			main(int argc, char **argv)
 	err = init_l_error();
 	data = init_l_data(err);
 	parse_arguments(data, argc, argv);
-	if (data->err->errno != 0 && !data->ignoreerr)
-		return (ft_printf("ERROR : %d, %s\n", err->errno, err->errstr));
+	if (data->err->errno != 0)
+		return (ft_printf("ERROR\n"));
 	if (read(data->fd, NULL, 0) < 0)
-		return (ft_printf("ERROR : Read a directory / Other read error"));
+		return (ft_printf("ERROR\n"));
 	parse_line(data);
 	if (data->err->errno)
-		return (write(2, "Error\n", 7));
+		return (write(2, "ERROR\n", 7));
 	if (!init_all(data))
-	{
-		ft_printf("printing member for debug\n");
-		ft_print_members(data->lines);
-		exitfunc(data->err->errno);
-	}
+		exitfunc(data->err->errno, data);
 	if (data->nants <= 0)
-		return (write(2, "Error : No ants\n", 16));
+		return (write(2, "ERROR\n", 7));
 	if ((data->nrooms = count_rooms(data->rooms)) == 0)
-		return (write(2, "Error : No rooms\n", 17));
+		return (write(2, "ERROR\n", 7));
 	data->frst = data->rooms;
 	main_cntd(data);
 	return (0);

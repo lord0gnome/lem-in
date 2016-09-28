@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:05:22 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/27 19:37:26 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/28 14:53:11 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int			parse_fd(t_l_data *d)
 	d->first = 0;
 	while (get_next_line(d->fd, &d->l) > 0)
 		if ((d->lines = ft_s_list(d->l, is_output_line(d->l), d)) == NULL)
-			break;
+			break ;
 	return (1);
 }
 
@@ -38,14 +38,14 @@ static int	parse_arguments_more(t_l_data *d, char **argv)
 		d->help = 1;
 	else if (argv[d->i][d->i2] == 'v')
 		d->visual = 1;
+	else if (argv[d->i][d->i2] == 's')
+		d->i2 += ft_atoi_addlen(&(d->slow), argv[d->i] + d->i2 + 1);
 	else if (argv[d->i][d->i2] == 'c')
 		d->nocomment = 1;
-	else if (argv[d->i][d->i2] == 'l')
-		d->order = -1;
-	else if (argv[d->i][d->i2] == 'e')
-		d->ignoreerr = 1;
-	else if (argv[d->i][d->i2] == 'o')
-		d->repairorder = 1;
+	else if (argv[d->i][d->i2] == 'd')
+		d->debug = 1;
+	else if (argv[d->i][d->i2] == 'p')
+		d->showpaths = 1;
 	else
 		return (0);
 	return (1);
