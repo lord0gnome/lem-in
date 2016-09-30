@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/28 15:59:15 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/26 17:05:08 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/30 10:59:25 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,17 @@ static void	prepare_ants(t_l_data *d, t_l_p **p, int *ants)
 	if (d->scone)
 		ants = d->ants;
 	d->antn = initantn(ants, d->nants, 0);
+	if (!d->anti)
+	{
+		d->err->errno = 100;
+		exitfunc(d->err->errno, d);
+	}
 	d->anti = initanti(d->antn, d->nants);
+	if (!d->anti)
+	{
+		d->err->errno = 100;
+		exitfunc(d->err->errno, d);
+	}
 }
 
 static void	make_ants_go_loop(t_l_data *d, int i, int pi, int *ants)
@@ -71,7 +81,7 @@ int			make_ants(t_l_data *d)
 	int	index;
 
 	if ((ants = (int *)malloc(sizeof(int) * (d->nants + 1))) == NULL)
-		return (0);
+		return (d->err->errno = 100);
 	ants[d->nants] = -2;
 	index = 0;
 	while (index < d->nants)

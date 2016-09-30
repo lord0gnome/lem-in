@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 15:16:32 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/28 18:07:58 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/30 10:59:25 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ typedef struct				s_l_data
 	t_l_p					**paths;
 }							t_l_data;
 
+void						exitfunc(int e, t_l_data *d);
 int							is_random(char *str);
 int							is_room_cont(char *str, t_l_data *d);
 int							lem_in_atoi(char *str);

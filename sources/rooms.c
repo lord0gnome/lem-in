@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/04 14:06:43 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/28 17:17:47 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/30 10:54:38 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,28 +52,28 @@ static void	set_room_data(t_l_rooms *new, t_l_data *d)
 int			add_room(t_l_data *d, char *name)
 {
 	t_l_rooms	*new;
-	t_l_rooms	*first;
+	t_l_rooms	*f;
 
 	if ((d->rooms))
 	{
-		first = (d->rooms);
-		while (first)
+		f = (d->rooms);
+		while (f)
 		{
-			if (!ft_strcmp(first->name, name) ||
-					(d->cy == first->y && d->cx == first->x))
-				return (0);
-			if (first->next)
-				first = first->next;
+			if (!ft_strcmp(f->name, name) || (d->cy == f->y && d->cx == f->x))
+				return (d->err->errno = 12);
+			if (f->next)
+				f = f->next;
 			else
 				break ;
 		}
 		if ((new = (t_l_rooms *)malloc(sizeof(t_l_rooms))) == NULL)
-			return (0);
+			return (d->err->errno = 100);
 		set_room_data(new, d);
 		new->name = ft_strdup(name);
-		first->next = new;
+		f->next = new;
 	}
 	else
 		create_rooms(d, name);
+	free(name);
 	return (1);
 }

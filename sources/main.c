@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 15:18:58 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/28 19:20:28 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/30 10:59:25 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ static void	exitfunc(int e, t_l_data *d)
 {
 	if (d->debug)
 		ft_print_members(d->lines, d);
-	if (e)
-		;
 	ft_putstr("ERROR\n");
 	exit(-1);
 }
@@ -88,7 +86,6 @@ int			main(int argc, char **argv)
 		exitfunc(data->err->errno, data);
 	if ((data->nrooms = count_rooms(data->rooms)) == 0)
 		exitfunc(data->err->errno, data);
-	data->frst = data->rooms;
 	main_cntd(data);
 	return (0);
 }
