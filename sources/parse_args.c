@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:05:22 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/30 12:16:00 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/30 13:47:25 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int			parse_arguments(t_l_data *d, int argc, char **av)
 	while (++d->i < argc)
 	{
 		d->i2 = 0;
-		if (av[d->i][d->i2] && av[d->i][d->i2] != '-')
+		if (av[d->i][d->i2] && (av[d->i][d->i2] != '-' || !av[d->i][d->i2 + 1]))
 			return (d->err->errno = 5);
 		else
 			d->i2++;
