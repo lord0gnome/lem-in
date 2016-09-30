@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/28 15:59:15 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/30 10:59:25 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/30 12:14:25 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	prepare_ants(t_l_data *d, t_l_p **p, int *ants)
 	if (d->scone)
 		ants = d->ants;
 	d->antn = initantn(ants, d->nants, 0);
-	if (!d->anti)
+	if (!d->antn)
 	{
 		d->err->errno = 100;
 		exitfunc(d->err->errno, d);

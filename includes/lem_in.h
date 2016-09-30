@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 15:16:32 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/30 10:59:25 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/30 13:28:54 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ typedef struct				s_l_data
 	char					debug;
 	char					nocomment;
 	char					order;
+	char					verbose;
 	char					command;
 	char					showpaths;
 	int						*ants;
@@ -110,8 +111,9 @@ typedef struct				s_l_data
 	t_l_p					**paths;
 }							t_l_data;
 
+void						print_error(int e);
 void						exitfunc(int e, t_l_data *d);
-int							is_random(char *str);
+int							is_random(char *str, t_l_data *d);
 int							is_room_cont(char *str, t_l_data *d);
 int							lem_in_atoi(char *str);
 int							is_output_line(char *str);
@@ -148,12 +150,11 @@ void						set_depth(t_l_rooms **all, t_l_data *d);
 void						megatest(t_l_data *d);
 void						init_room_tab(t_l_data *d, t_l_rooms *first);
 void						set_null_room_tab(t_l_rooms **tab, int nrooms);
-int							count_rooms(t_l_rooms *first);
+int							count_rooms(t_l_rooms *first, t_l_data *d);
 int							get_link_list_length(t_l_links *list);
 int							set_lindexes_for_room(t_l_rooms **t, t_l_data *d);
 int							test_ants_first(t_s_list *antsline, t_l_error *err);
 int							test_strt_end(t_l_rooms *start, t_l_error *err);
-void						print_arguments(t_l_data *d);
 int							ordered_flags(t_s_list *travel, t_l_data *d);
 void						test_order(t_l_data *d);
 int							is_command(char *str);

@@ -6,7 +6,7 @@
 #    By: guiricha <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/26 16:55:06 by guiricha          #+#    #+#              #
-#    Updated: 2016/09/28 15:41:21 by guiricha         ###   ########.fr        #
+#    Updated: 2016/09/30 13:29:12 by guiricha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ SRC_NAME = main.c parse_args.c init.c ants.c rooms.c parse_line.c \
 		   links.c order_commands.c test_funcs.c convert_to_tab.c \
 		   init_room_tab.c megatest.c depth.c resolve.c paths.c glur.c \
 		   remove.c det_paths.c ants2.c ants3.c ft_s_linked_list.c \
-		   custom_atoi.c
+		   custom_atoi.c error.c
 NAME = lem-in
 SRC_DIR = ./sources/
 SRC_NDIR=$(addprefix $(SRC_DIR), $(SRC_NAME))

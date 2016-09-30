@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 15:18:58 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/30 10:59:25 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/30 13:38:47 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,14 @@
 #include <unistd.h>
 #include <time.h>
 
-static void	exitfunc(int e, t_l_data *d)
+void		exitfunc(int e, t_l_data *d)
 {
 	if (d->debug)
 		ft_print_members(d->lines, d);
-	ft_putstr("ERROR\n");
+	if (d->verbose)
+		print_error(e);
+	else
+		ft_putstr("ERROR\n");
 	exit(-1);
 }
 
@@ -73,8 +76,8 @@ int			main(int argc, char **argv)
 	err = init_l_error();
 	data = init_l_data(err);
 	parse_arguments(data, argc, argv);
-	if (data->err->errno != 0)
-		return (ft_printf("ERROR\n"));
+	if (data->err->errno)
+		exitfunc(data->err->errno, data);
 	if (read(data->fd, NULL, 0) < 0)
 		return (ft_printf("ERROR\n"));
 	parse_line(data);
@@ -84,7 +87,7 @@ int			main(int argc, char **argv)
 		exitfunc(data->err->errno, data);
 	if (data->nants <= 0)
 		exitfunc(data->err->errno, data);
-	if ((data->nrooms = count_rooms(data->rooms)) == 0)
+	if ((data->nrooms = count_rooms(data->rooms, data)) == 0)
 		exitfunc(data->err->errno, data);
 	main_cntd(data);
 	return (0);

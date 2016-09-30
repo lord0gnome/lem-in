@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:05:22 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/28 19:11:39 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/30 12:16:00 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ static int	parse_arguments_more(t_l_data *d, char **argv)
 		d->nocomment = 1;
 	else if (argv[d->i][d->i2] == 'd')
 		d->debug = 1;
+	else if (argv[d->i][d->i2] == 'e')
+		d->verbose = 1;
 	else if (argv[d->i][d->i2] == 'p')
 		d->showpaths = 1;
 	else
@@ -57,8 +59,8 @@ static int	parse_arguments_more(t_l_data *d, char **argv)
 
 static int	parse_arguments_more_more(t_l_data *d, char **argv)
 {
-	if (argv[d->i][d->i2 + 2])
-		d->fd = open(argv[d->i] + d->i2 + 2, O_RDONLY);
+	if (argv[d->i][d->i2 + 1])
+		d->fd = open(argv[d->i] + d->i2 + 1, O_RDONLY);
 	else
 		return (d->err->errno = 3);
 	if (d->fd < 0)
@@ -78,10 +80,11 @@ int			parse_arguments(t_l_data *d, int argc, char **av)
 			d->i2++;
 		while (av[d->i][d->i2])
 		{
-			if (av[d->i][d->i2 + 1] && (!ft_strncmp(av[d->i] + d->i2, "f_", 2)))
+			if (av[d->i][d->i2] == 'f')
 			{
-				if (!parse_arguments_more_more(d, av))
-					break ;
+				if (parse_arguments_more_more(d, av))
+					return (1);
+				break ;
 			}
 			else if (parse_arguments_more(d, av))
 				;

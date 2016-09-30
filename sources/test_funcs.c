@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/01 13:47:55 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/28 15:33:39 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/30 13:40:38 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void		print_room(t_l_rooms *room, t_l_data *d)
 	ft_putchar('\n');
 }
 
-int			count_rooms(t_l_rooms *first)
+int			count_rooms(t_l_rooms *first, t_l_data *d)
 {
 	int	ret;
 
@@ -71,6 +71,8 @@ int			count_rooms(t_l_rooms *first)
 		ret++;
 		first = first->next;
 	}
+	if (ret == 0)
+		d->err->errno = 25;
 	return (ret);
 }
 
@@ -88,8 +90,8 @@ int			test_ants_first(t_s_list *antsline, t_l_error *err)
 
 int			test_strt_end(t_l_rooms *travel, t_l_error *err)
 {
-	char	start;
-	char	end;
+	int	start;
+	int	end;
 
 	start = 0;
 	end = 0;
@@ -107,9 +109,9 @@ int			test_strt_end(t_l_rooms *travel, t_l_error *err)
 		return (err->errno = 8);
 	if (end && !start)
 		return (err->errno = 9);
-	if (end != 1)
+	if (end != 1 && start == 1)
 		return (err->errno = 10);
-	if (start != 1)
+	if (start != 1 && end == 1)
 		return (err->errno = 11);
-	return (0);
+	return (err->errno = start != 1 && end != 1 ? 12 : 0);
 }

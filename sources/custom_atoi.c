@@ -6,13 +6,13 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/28 13:45:05 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/28 18:20:07 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/30 12:18:19 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem_in.h"
 
-int		is_random(char *str)
+int		is_random(char *str, t_l_data *d)
 {
 	int	i;
 
@@ -26,7 +26,7 @@ int		is_random(char *str)
 			return (0);
 	}
 	else if (str[i] != '#')
-		return (1);
+		return (d->err->errno = 23);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:06:52 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/28 18:03:49 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/30 13:04:17 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void		init_l_data_more(t_l_data *d)
 	d->fd = 0;
 	d->help = 0;
 	d->nants = -1;
+	d->verbose = 0;
 	d->visual = 0;
 	d->order = 0;
 	d->showpaths = 0;
@@ -68,12 +69,13 @@ t_l_error	*init_l_error(void)
 
 static int	init_all_cntd(t_l_data *d, t_s_list *travel, int tmp)
 {
-	if (travel->flag == 5 && d->nants == -1)
+	if (travel->flag == 5)
 	{
-		if (!test_ants_first(travel, d->err))
-			return (d->nants = lem_in_atoi(travel->str));
-		else
-			return (d->err->errno);
+		if (d->nants == -1)
+			if (!test_ants_first(travel, d->err))
+				return (d->nants = lem_in_atoi(travel->str));
+		travel->flag = -1;
+		return (d->err->errno = d->err->errno ? d->err->errno : 5);
 	}
 	else if (travel->flag == 4 && (tmp = is_command(travel->str)))
 		return (d->command = tmp);
@@ -110,9 +112,7 @@ int			init_all(t_l_data *d)
 		else
 			continue ;
 		if (travel->flag == -1)
-		{
 			return (1);
-		}
 		d->fd = travel->flag == 3 || d->fd == 3 ? 3 : 2;
 		p = travel;
 		travel = travel->next;

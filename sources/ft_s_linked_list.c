@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/20 13:01:49 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/28 19:14:44 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/30 12:16:38 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ t_s_list	*ft_s_list(char *str, char flag, t_l_data *d)
 	t_s_list	*travel;
 	t_s_list	*new;
 
-	if (d->first == 0 && is_random(str))
+	if (d->first == 0 && is_random(str, d))
 		return (NULL);
 	d->first++;
 	if (!d->lines)

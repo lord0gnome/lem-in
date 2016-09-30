@@ -6,7 +6,7 @@
 /*   By: guiricha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/26 16:55:20 by guiricha          #+#    #+#             */
-/*   Updated: 2016/09/30 10:56:41 by guiricha         ###   ########.fr       */
+/*   Updated: 2016/09/30 11:45:35 by guiricha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int			*initanti(int *antn, int nants)
 	int	*anti;
 
 	if ((anti = (int *)malloc(sizeof(int) * (nants + 1))) == NULL)
-		return (NULL)
+		return (NULL);
 	anti[nants] = -1;
 	i = 0;
 	set = 0;
